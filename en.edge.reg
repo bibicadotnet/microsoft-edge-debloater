@@ -373,6 +373,12 @@ Windows Registry Editor Version 5.00
 ;Disable trending suggestions in address bar
 "AddressBarTrendingSuggestEnabled"=dword:00000000
 
+; Disable "Continue running background apps when Chromium is closed"
+"BackgroundModeEnabled"=dword:00000000
+
+;Disable Startup Boost
+"StartupBoostEnabled"=dword:00000000
+
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 ;Mandatory extension 'I still don't care about cookies'
 "1"="kkacdgacpkediooahopgcbdahlpipheh"
