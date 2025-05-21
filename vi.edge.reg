@@ -316,7 +316,7 @@ Windows Registry Editor Version 5.00
 ;Chế độ DNS over HTTPS tự động
 "DnsOverHttpsMode"="automatic"
 
-;Tắt hỗ trợ Manifest V2 cho tiện ích mở rộng
+;Hỗ trợ Manifest V2 cho tiện ích mở rộng
 "ExtensionManifestV2Availability"=dword:00000002
 
 ;Tắt DNS client tích hợp
