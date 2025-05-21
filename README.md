@@ -48,3 +48,14 @@ If you want to enable/disable more features based on your personal preferences:
 |--------|-----|
 | View applied policies | `edge://policy/` |
 | Check Edge version info | `edge://version/` |
+
+## 📚 Source Credits
+
+This debloater configuration is based on and modified from the following open-source projects:
+
+- [Bakinazik/microsoft-edge-debloater](https://github.com/bakinazik/edgedebloater)
+- [Marlock9/Edge-Debloat](https://github.com/marlock9/edge-debloat)
+
+Thank you to these creators for their contributions and insights into optimizing Microsoft Edge.
+
+---
