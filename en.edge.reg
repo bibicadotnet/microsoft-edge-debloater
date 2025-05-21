@@ -316,7 +316,7 @@ Windows Registry Editor Version 5.00
 ;DNS over HTTPS automatic mode
 "DnsOverHttpsMode"="automatic"
 
-;Disable Manifest V2 support for extensions
+;Allow extensions to use Manifest V2
 "ExtensionManifestV2Availability"=dword:00000002
 
 ;Disable built-in DNS client
