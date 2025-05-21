@@ -1,0 +1,381 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+;Disable welcome screen on first Edge launch
+"HideFirstRunExperience"=dword:00000001
+
+;Disable sidebar search feature
+"SearchInSidebarEnabled"=dword:00000002
+
+;Disable Hubs Sidebar feature
+"HubsSidebarEnabled"=dword:00000000
+
+;Disable Read Aloud feature
+"ReadAloudEnabled"=dword:00000000
+
+;Disable diagnostic data sending
+"DiagnosticData"=dword:00000000
+
+;Disable URL sending for error analysis (UrlDiagnosticDataEnabled)
+"UrlDiagnosticDataEnabled"=dword:00000000
+
+;Disable pinning Browser Essentials button on toolbar
+"PinBrowserEssentialsToolbarButton"=dword:00000000
+
+;Disable Collections feature
+"EdgeCollectionsEnabled"=dword:00000000
+
+;Disable personalization reporting
+"PersonalizationReportingEnabled"=dword:00000000
+
+;Disable split screen feature
+"SplitScreenEnabled"=dword:00000000
+
+;Disable web capture feature
+"WebCaptureEnabled"=dword:00000000
+
+;Disable guided switch feature
+"GuidedSwitchEnabled"=dword:00000000
+
+;Disable Microsoft Rewards display
+"ShowMicrosoftRewards"=dword:00000000
+
+;Auto-import data on first run
+"AutoImportAtFirstRun"=dword:00000004
+
+;Disable Workspaces feature
+"EdgeWorkspacesEnabled"=dword:00000000
+
+;Disable Edge Wallet payment feature
+"EdgeWalletCheckoutEnabled"=dword:00000000
+
+;Disable Etree feature in Edge Wallet
+"EdgeWalletEtreeEnabled"=dword:00000000
+
+;Disable AAD website SSO
+"AADWebSiteSSOUsingThisProfileEnabled"=dword:00000000
+
+;Disable accessibility image labels
+"AccessibilityImageLabelsEnabled"=dword:00000000
+
+;Disable Bing search provider in address bar
+"AddressBarMicrosoftSearchInBingProviderEnabled"=dword:00000000
+
+;Disable games menu
+"AllowGamesMenu"=dword:00000000
+
+;Disable inline compose
+"ComposeInlineEnabled"=dword:00000000
+
+;Disable automatic on-premises account sign-in
+"ConfigureOnPremisesAccountAutoSignIn"=dword:00000000
+
+;Disable online text-to-speech configuration
+"ConfigureOnlineTextToSpeech"=dword:00000000
+
+;Disable share configuration
+"ConfigureShare"=dword:00000000
+
+;Disable default browser settings campaign
+"DefaultBrowserSettingsCampaignEnabled"=dword:00000000
+
+;Disable 3rd party SERP telemetry
+"Edge3PSerpTelemetryEnabled"=dword:00000000
+
+;Disable Edge Drop feature
+"EdgeEDropEnabled"=dword:00000000
+
+;Disable Wallet donation feature
+"WalletDonationEnabled"=dword:00000000
+
+;Disable data import on each launch
+"ImportOnEachLaunch"=dword:00000000
+
+;Disable in-app support
+"InAppSupportEnabled"=dword:00000000
+
+;Disable local browser data sharing
+"LocalBrowserDataShareEnabled"=dword:00000000
+
+;Disable live captions
+"LiveCaptionsAllowed"=dword:00000000
+
+;Disable MSA website SSO
+"MSAWebSiteSSOUsingThisProfileAllowed"=dword:00000000
+
+;Disable Microsoft Edge Insider ads
+"MicrosoftEdgeInsiderPromotionEnabled"=dword:00000000
+
+;Disable Microsoft Editor synonyms
+"MicrosoftEditorSynonymsEnabled"=dword:00000000
+
+;Disable Microsoft Editor spell check
+"MicrosoftEditorProofingEnabled"=dword:00000000
+
+;Disable Related Website Sets
+"RelatedWebsiteSetsEnabled"=dword:00000000
+
+;Disable payment method query
+"PaymentMethodQueryEnabled"=dword:00000000
+
+;Disable Pinning Wizard
+"PinningWizardAllowed"=dword:00000000
+
+;Disable promotional tabs
+"PromotionalTabsEnabled"=dword:00000000
+
+;Disable quick search mini menu display
+"QuickSearchShowMiniMenu"=dword:00000000
+
+;Disable Office files quick view
+"QuickViewOfficeFilesEnabled"=dword:00000000
+
+;Disable remote debugging
+"RemoteDebuggingAllowed"=dword:00000000
+
+;Disable web service for navigation error resolution
+"ResolveNavigationErrorsUseWebService"=dword:00000000
+
+;Disable roaming profile support
+"RoamingProfileSupportEnabled"=dword:00000000
+
+;Disable image search
+"SearchForImageEnabled"=dword:00000000
+
+;Disable search filters
+"SearchFiltersEnabled"=dword:00000000
+
+;Enable search suggestions
+"SearchSuggestEnabled"=dword:00000001
+
+;Disable search bar
+"SearchbarAllowed"=dword:00000000
+
+;Disable search bar on startup
+"SearchbarIsEnabledOnStartup"=dword:00000000
+
+;Disable share links
+"SharedLinksEnabled"=dword:00000000
+
+;Disable Acrobat subscription button
+"ShowAcrobatSubscriptionButton"=dword:00000000
+
+;Disable Office shortcuts in favorites bar
+"ShowOfficeShortcutInFavoritesBar"=dword:00000000
+
+;Disable recommendations
+"ShowRecommendationsEnabled"=dword:00000000
+
+;Disable speech recognition
+"SpeechRecognitionEnabled"=dword:00000000
+
+;Disable standalone Hubs Sidebar
+"StandaloneHubsSidebarEnabled"=dword:00000000
+
+;Disable tab services
+"TabServicesEnabled"=dword:00000000
+
+;Disable text prediction
+"TextPredictionEnabled"=dword:00000000
+
+;Disable upload from phone
+"UploadFromPhoneEnabled"=dword:00000000
+
+;Disable visual search
+"VisualSearchEnabled"=dword:00000000
+
+;Redirect new tab page search box
+"NewTabPageSearchBox"="redirect"
+
+;Disable password generator
+"PasswordGeneratorEnabled"=dword:00000000
+
+;Disable password manager
+"PasswordManagerEnabled"=dword:00000000
+
+;Disable password monitoring
+"PasswordMonitorAllowed"=dword:00000000
+
+;Disable password protection warnings
+"PasswordProtectionWarningTrigger"=dword:00000000
+
+;Disable alternate error pages
+"AlternateErrorPagesEnabled"=dword:00000000
+
+;Disable ask before closing
+"AskBeforeCloseEnabled"=dword:00000000
+
+;Disable address autofill
+"AutofillAddressEnabled"=dword:00000000
+
+;Disable credit card autofill
+"AutofillCreditCardEnabled"=dword:00000000
+
+;Disable memberships autofill
+"AutofillMembershipsEnabled"=dword:00000000
+
+;Disable AAD web SSO
+"AADWebSSOAllowed"=dword:00000000
+
+;Disable AI themes
+"AIGenThemesEnabled"=dword:00000000
+
+;Disable Access Code Cast
+"AccessCodeCastEnabled"=dword:00000000
+
+;Disable ads transparency
+"AdsTransparencyEnabled"=dword:00000000
+
+;Disable Edge Admin Center
+"EdgeAdminCenterEnabled"=dword:00000000
+
+;Block Bing ads
+"BingAdsSuppression"=dword:00000001
+
+;Enable Do Not Track configuration
+"ConfigureDoNotTrack"=dword:00000001
+
+;Disable Edge asset delivery service
+"EdgeAssetDeliveryServiceEnabled"=dword:00000000
+
+;Disable Edge shopping assistant
+"EdgeShoppingAssistantEnabled"=dword:00000000
+
+;Disable experimentation and configuration service
+"ExperimentationAndConfigurationServiceControl"=dword:00000000
+
+;Disable user feedback
+"UserFeedbackAllowed"=dword:00000000
+
+;Disable Web Widget
+"WebWidgetAllowed"=dword:00000000
+
+;Disable Typosquatting checker
+"TyposquattingCheckerEnabled"=dword:00000000
+
+;Disable sign-in interception
+"SigninInterceptionEnabled"=dword:00000000
+
+;Disable side search
+"SideSearchEnabled"=dword:00000000
+
+;Disable default PDF recommendations
+"ShowPDFDefaultRecommendationsEnabled"=dword:00000000
+
+;Disable home button
+"ShowHomeButton"=dword:00000000
+
+;Disable shopping list
+"ShoppingListEnabled"=dword:00000000
+
+;Disable Safe Browsing surveys
+"SafeBrowsingSurveysEnabled"=dword:00000000
+
+;Disable Safe Browsing deep scanning
+"SafeBrowsingDeepScanningEnabled"=dword:00000000
+
+;Disable Safe Browsing proxied real-time checks
+"SafeBrowsingProxiedRealTimeChecksAllowed"=dword:00000000
+
+;Disable dismissing compromised password alerts
+"PasswordDismissCompromisedAlertEnabled"=dword:00000000
+
+;Disable MAM
+"MAMEnabled"=dword:00000000
+
+;Disable Edge management
+"EdgeManagementEnabled"=dword:00000000
+
+;Disable Desktop Sharing Hub
+"DesktopSharingHubEnabled"=dword:00000000
+
+;Disable Copilot page context
+"CopilotPageContextEnabled"=dword:00000000
+
+;Disable new tab page content
+"NewTabPageContentEnabled"=dword:00000000
+
+;Disable new tab page app launcher
+"NewTabPageAppLauncherEnabled"=dword:00000000
+
+;Disable Bing Chat on new tab page
+"NewTabPageBingChatEnabled"=dword:00000000
+
+;Disable new tab page quick links
+"NewTabPageQuickLinksEnabled"=dword:00000000
+
+;Disable QR code generation
+"QRCodeGeneratorEnabled"=dword:00000000
+
+;Disable Spotlight experiences and recommendations
+"SpotlightExperiencesAndRecommendationsEnabled"=dword:00000000
+
+;Configure tracking prevention to highest level
+"TrackingPrevention"=dword:00000003
+
+;DNS over HTTPS automatic mode
+"DnsOverHttpsMode"="automatic"
+
+;Disable Manifest V2 support for extensions
+"ExtensionManifestV2Availability"=dword:00000002
+
+;Disable built-in DNS client
+"BuiltInDnsClientEnabled"=dword:00000000
+
+;Disable network prediction
+"NetworkPredictionOptions"=dword:00000000
+
+;Disable high efficiency mode
+"HighEfficiencyModeEnabled"=dword:00000000
+
+;Disable proactive auth workflow
+"ProactiveAuthWorkflowEnabled"=dword:00000000
+
+;Disable Copilot page context (repeat)
+"CopilotPageContextEnabled"=dword:00000000
+
+;Disable Application Guard favorites sync
+"ApplicationGuardFavoritesSyncEnabled"=dword:00000000
+
+;Disable Application Guard traffic identification
+"ApplicationGuardTrafficIdentificationEnabled"=dword:00000000
+
+;Disable seamless web-to-browser sign-in
+"SeamlessWebToBrowserSignInEnabled"=dword:00000000
+
+;Disable ML autofill
+"EdgeAutofillMlEnabled"=dword:00000000
+
+;Enable local GenAI foundational model settings
+"GenAILocalFoundationalModelSettings"=dword:00000001
+
+;Disable personalizing top sites in customize sidebar
+"PersonalizeTopSitesInCustomizeSidebarEnabled"=dword:00000000
+
+;Disable extension performance detection
+"ExtensionsPerformanceDetectorEnabled"=dword:00000000
+
+;Disable performance detection
+"PerformanceDetectorEnabled"=dword:00000000
+
+;Disable Entra Copilot page context
+"EdgeEntraCopilotPageContext"=dword:00000000
+
+;Disable spell check
+"SpellcheckEnabled"=dword:00000000
+
+;Disable job search results in address bar
+"AddressBarWorkSearchResultsEnabled"=dword:00000000
+
+;Disable Scareware Blocker protection
+"ScarewareBlockerProtectionEnabled"=dword:00000000
+
+;Disable trending suggestions in address bar
+"AddressBarTrendingSuggestEnabled"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
+;Mandatory extension 'I still don't care about cookies'
+"1"="kkacdgacpkediooahopgcbdahlpipheh"
+
+;Mandatory extension 'uBlock Origin'
+"2"="odfafepnkmbhccpbejgmiehpchacaeak"
