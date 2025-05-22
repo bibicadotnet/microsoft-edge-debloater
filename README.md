@@ -14,10 +14,12 @@
   - I Still Don't Care About Cookies
  
 ## Setup Microsoft Edge Debloater
+Run the command below in PowerShell:
 ```
 irm https://go.bibica.net/edge | iex
 ```
 ## Remove Microsoft Edge
+Run the command below in PowerShell:
 ```
 irm https://go.bibica.net/remove_edge | iex
 ```
