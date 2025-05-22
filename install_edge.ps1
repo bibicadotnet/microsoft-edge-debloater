@@ -7,7 +7,7 @@
     3. Download and apply registry tweaks to disable unwanted features
     4. Remove scheduled tasks created by Edge Update
 .NOTES
-    File Name      : Install-EdgeClean.ps1
+    File Name      : install_edge.ps1
     Prerequisite   : PowerShell 5.1 or later, Administrator rights
 #>
 
@@ -22,13 +22,18 @@ Write-Host "Downloading and installing Microsoft Edge..." -ForegroundColor Cyan
 $EdgeInstaller = "$env:TEMP\MicrosoftEdgeSetup.exe"
 
 try {
-    # Download Edge installer
+    # Download Edge installer silently
+    $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2109047&Channel=Stable&language=en" -OutFile $EdgeInstaller -UseBasicParsing
     
     # Install Edge silently
-    Start-Process -FilePath $EdgeInstaller -ArgumentList "/silent /install" -Wait
+    $installProcess = Start-Process -FilePath $EdgeInstaller -ArgumentList "/silent /install" -PassThru -Wait
     
-    Write-Host "Microsoft Edge installed successfully." -ForegroundColor Green
+    if ($installProcess.ExitCode -eq 0) {
+        Write-Host "Microsoft Edge installed successfully." -ForegroundColor Green
+    } else {
+        Write-Host "Edge installation completed with exit code $($installProcess.ExitCode)" -ForegroundColor Yellow
+    }
 }
 catch {
     Write-Host "Error downloading or installing Edge: $_" -ForegroundColor Red
@@ -59,8 +64,9 @@ $RegFileUrl = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-deb
 $RegFile = "$env:TEMP\edge_settings.reg"
 
 try {
+    $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri $RegFileUrl -OutFile $RegFile -UseBasicParsing
-    Start-Process "regedit.exe" -ArgumentList "/s `"$RegFile`"" -Wait
+    Start-Process "regedit.exe" -ArgumentList "/s `"$RegFile`"" -Wait -NoNewWindow
     Write-Host "Registry tweaks applied successfully." -ForegroundColor Green
 }
 catch {
@@ -70,7 +76,6 @@ catch {
 # 4. Remove Edge Update scheduled tasks
 Write-Host "Removing Edge Update scheduled tasks..." -ForegroundColor Cyan
 
-# Get all tasks that match our patterns
 $TasksToRemove = @(
     "MicrosoftEdgeUpdateBrowserReplacementTask"
     "*MicrosoftEdgeUpdateTaskMachineCore*"
@@ -82,26 +87,18 @@ foreach ($pattern in $TasksToRemove) {
         $tasks = Get-ScheduledTask | Where-Object { $_.TaskName -like $pattern }
         
         foreach ($task in $tasks) {
-            Write-Host "Processing task: $($task.TaskName)" -ForegroundColor Cyan
-            
-            # First disable the task if it's enabled
-            if ($task.State -ne "Disabled") {
-                try {
-                    Disable-ScheduledTask -TaskPath $task.TaskPath -TaskName $task.TaskName -ErrorAction Stop | Out-Null
-                    Write-Host " - Disabled task" -ForegroundColor DarkGray
-                }
-                catch {
-                    Write-Host " - Could not disable task: $_" -ForegroundColor Yellow
-                }
-            }
-            
-            # Then delete the task
             try {
-                Unregister-ScheduledTask -TaskPath $task.TaskPath -TaskName $task.TaskName -Confirm:$false -ErrorAction Stop | Out-Null
-                Write-Host " - Successfully removed task" -ForegroundColor Green
+                # Disable task first if enabled
+                if ($task.State -ne "Disabled") {
+                    $task | Disable-ScheduledTask -ErrorAction SilentlyContinue | Out-Null
+                }
+                
+                # Delete the task
+                $task | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue | Out-Null
+                Write-Host "Removed task: $($task.TaskName)" -ForegroundColor Green
             }
             catch {
-                Write-Host " - Could not remove task: $_" -ForegroundColor Red
+                Write-Host "Failed to remove task $($task.TaskName): $_" -ForegroundColor Yellow
             }
         }
     }
