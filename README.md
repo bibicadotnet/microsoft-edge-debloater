@@ -2,13 +2,20 @@
 
 > **Note:** This guide helps you remove unnecessary features from Microsoft Edge while preserving essential functions like sync, extensions, and security settings.
 
-## Features Preserved
+### Steps will be executed sequentially as follows:
 
-- Data Sync
-- Auto Page Translate
-- Favorites Bar
-- Manifest V2 Extension Support
-- DNS over HTTPS (DoH)
+1. Install or update Edge Stable (the stable version) from Microsoft
+2. Prevent Edge from auto-updating via the registry  
+3. Remove Edge's automatic update tasks:  
+   - `MicrosoftEdgeUpdateBrowserReplacementTask`  
+   - `MicrosoftEdgeUpdateTaskMachineCore`  
+   - `MicrosoftEdgeUpdateTaskMachineUA`  
+4. Remove unnecessary Microsoft Edge features, keeping only essential functionalities such as:  
+   - Data Sync
+   - Auto Page Translate
+   - Favorites Bar
+   - Manifest V2 Extension Support
+   - DNS over HTTPS (DoH)
  
 ## Setup Microsoft Edge Debloater
 Run the command below in PowerShell:
