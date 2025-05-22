@@ -9,9 +9,6 @@
 - Favorites Bar
 - Manifest V2 Extension Support
 - DNS over HTTPS (DoH)
-- Extensions Installed:
-  - uBlock Origin
-  - I Still Don't Care About Cookies
  
 ## Setup Microsoft Edge Debloater
 Run the command below in PowerShell:
