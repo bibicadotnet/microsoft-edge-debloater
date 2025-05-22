@@ -2,7 +2,7 @@
 
 > **Note:** This guide helps you remove unnecessary features from Microsoft Edge while preserving essential functions like sync, extensions, and security settings.
 
-## ✅ Features Preserved
+## Features Preserved
 
 - Data Sync
 - Auto Page Translate
@@ -12,8 +12,17 @@
 - Extensions Installed:
   - uBlock Origin
   - I Still Don't Care About Cookies
+ 
+## Setup Microsoft Edge Debloater
+```
+irm https://go.bibica.net/edge | iex
+```
+## Remove Microsoft Edge
+```
+irm https://go.bibica.net/remove-edge | iex
+```
 
-## 📦 Steps to Use Debloater
+## Only Debloater
 
 1. **Download** the `microsoft-edge-debloater` tool [from here](https://github.com/bibicadotnet/microsoft-edge-debloater/archive/refs/heads/main.zip)
 2. **Extract** the downloaded archive.
@@ -24,7 +33,7 @@
    edge://restart
    ```
 
-## 🔁 Restore Default Settings
+## Restore Default Settings
 
 If you encounter issues or feel that Edge is overly restricted:
 
@@ -32,7 +41,7 @@ If you encounter issues or feel that Edge is overly restricted:
   - Run the `restore-default.reg` file to remove all registry modifications.
   - Or go to `edge://settings/reset` and click **Restore settings to their default values**.
 
-## 🛠️ Customize Further
+## Customize Further
 
 If you want to enable/disable more features based on your personal preferences:
 
@@ -42,14 +51,14 @@ If you want to enable/disable more features based on your personal preferences:
   1. Run `restore-default.reg` to remove previous settings.
   2. Run `en.edge.reg` again to apply the new configuration.
 
-## 🔗 Useful Edge URLs
+## Useful Edge URLs
 
 | Purpose | URL |
 |--------|-----|
 | View applied policies | `edge://policy/` |
 | Check Edge version info | `edge://version/` |
 
-## 📚 Source Credits
+## Source Credits
 
 This debloater configuration is based on and modified from the following open-source projects:
 
