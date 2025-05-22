@@ -19,7 +19,7 @@ irm https://go.bibica.net/edge | iex
 ```
 ## Remove Microsoft Edge
 ```
-irm https://go.bibica.net/remove/edge | iex
+irm https://go.bibica.net/remove_edge | iex
 ```
 
 ## Only Debloater
