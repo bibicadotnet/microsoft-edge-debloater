@@ -379,9 +379,9 @@ Windows Registry Editor Version 5.00
 ;Disable Startup Boost
 "StartupBoostEnabled"=dword:00000000
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
+;[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 ;Mandatory extension 'I still don't care about cookies'
-"1"="kkacdgacpkediooahopgcbdahlpipheh"
+;"1"="kkacdgacpkediooahopgcbdahlpipheh"
 
 ;Mandatory extension 'uBlock Origin'
-"2"="odfafepnkmbhccpbejgmiehpchacaeak"
+;"2"="odfafepnkmbhccpbejgmiehpchacaeak"
