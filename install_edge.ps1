@@ -211,6 +211,29 @@ foreach ($taskName in $TasksToRemove) {
 
 # 6. Apply additional registry tweaks with retry
 Write-Host "Applying additional registry tweaks..." -ForegroundColor Cyan
+
+# First, apply restore-default.reg to reset any existing settings
+$RestoreRegFileUrl = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/restore-default.reg"
+$RestoreRegFile = "$env:TEMP\restore_default.reg"
+
+try {
+    Write-Host "Downloading and applying restore-default.reg..." -ForegroundColor Cyan
+    Invoke-WithRetry -OperationName "Downloading restore-default registry file" -ScriptBlock {
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $RestoreRegFileUrl -OutFile $RestoreRegFile -UseBasicParsing
+    }
+    
+    Invoke-WithRetry -OperationName "Applying restore-default registry tweaks" -ScriptBlock {
+        Start-Process "regedit.exe" -ArgumentList "/s `"$RestoreRegFile`"" -Wait -NoNewWindow
+    }
+    
+    Write-Host "Restore-default registry tweaks applied successfully." -ForegroundColor Green
+}
+catch {
+    Write-Host "Error applying restore-default registry tweaks: $_" -ForegroundColor Red
+}
+
+# Then apply the custom vi.edge.reg settings
 $RegFileUrl = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/vi.edge.reg"
 $RegFile = "$env:TEMP\edge_settings.reg"
 
@@ -224,10 +247,10 @@ try {
         Start-Process "regedit.exe" -ArgumentList "/s `"$RegFile`"" -Wait -NoNewWindow
     }
     
-    Write-Host "Registry tweaks applied successfully." -ForegroundColor Green
+    Write-Host "Custom registry tweaks applied successfully." -ForegroundColor Green
 }
 catch {
-    Write-Host "Error applying registry tweaks after retries: $_" -ForegroundColor Red
+    Write-Host "Error applying custom registry tweaks after retries: $_" -ForegroundColor Red
 }
 
 # Cleanup temporary files
