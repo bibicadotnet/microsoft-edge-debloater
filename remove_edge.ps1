@@ -80,7 +80,8 @@ $edgeRegKeys = @(
     "HKLM:\SOFTWARE\Microsoft\EdgeUpdate",
     "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate",
     "HKCU:\Software\Microsoft\Edge",
-    "HKCU:\Software\Microsoft\EdgeUpdate"
+    "HKCU:\Software\Microsoft\EdgeUpdate",
+    "HKLM:\Software\Policies\Microsoft\Edge"
 )
 
 foreach ($regKey in $edgeRegKeys) {
