@@ -6,6 +6,7 @@
     2. Disable all Edge background processes and auto-updates
     3. Download and apply registry tweaks to disable unwanted features
     4. Remove scheduled tasks created by Edge Update
+    5. Completely disable MicrosoftEdgeUpdate.exe while preserving manual updates
 .NOTES
     File Name      : install_edge.ps1
     Prerequisite   : PowerShell 5.1 or later, Administrator rights
@@ -40,26 +41,91 @@ catch {
     exit
 }
 
-# 2. Disable Edge background processes and auto-updates
-Write-Host "Disabling Edge background processes and auto-updates..." -ForegroundColor Cyan
+# 2. Configure Edge Update policies
+Write-Host "Configuring Edge Update policies..." -ForegroundColor Cyan
 
-# Disable auto-updates via registry
+# Create registry keys if they don't exist
 $EdgeUpdateRegPath = "HKLM:\SOFTWARE\Policies\Microsoft\EdgeUpdate"
 if (-not (Test-Path $EdgeUpdateRegPath)) {
     New-Item -Path $EdgeUpdateRegPath -Force | Out-Null
 }
-Set-ItemProperty -Path $EdgeUpdateRegPath -Name "UpdateDefault" -Value 0 -Type DWord
-Set-ItemProperty -Path $EdgeUpdateRegPath -Name "AutoUpdateCheckPeriodMinutes" -Value 0 -Type DWord
 
-# Disable background mode
-$EdgeBackgroundRegPath = "HKLM:\SOFTWARE\Policies\Microsoft\Edge"
-if (-not (Test-Path $EdgeBackgroundRegPath)) {
-    New-Item -Path $EdgeBackgroundRegPath -Force | Out-Null
+# Set registry values to disable auto-updates but allow manual updates
+$updateSettings = @{
+    "UpdateDefault" = 0
+    "AutoUpdateCheckPeriodMinutes" = 0
+    "DisableAutoUpdateChecksCheckboxValue" = 1
+    "InstallDefault" = 0
+    "AllowManualUpdateCheck" = 1  # This enables manual updates from Settings
 }
-Set-ItemProperty -Path $EdgeBackgroundRegPath -Name "BackgroundModeEnabled" -Value 0 -Type DWord
 
-# 3. Download and apply registry tweaks
-Write-Host "Downloading and applying registry tweaks..." -ForegroundColor Cyan
+foreach ($key in $updateSettings.Keys) {
+    Set-ItemProperty -Path $EdgeUpdateRegPath -Name $key -Value $updateSettings[$key] -Type DWord
+}
+
+# 3. Completely stop and disable Edge Update processes
+Write-Host "Stopping all Edge Update processes..." -ForegroundColor Cyan
+
+# Stop any running Edge Update processes
+try {
+    Get-Process -Name "MicrosoftEdgeUpdate" -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+    Write-Host "Stopped all MicrosoftEdgeUpdate.exe processes" -ForegroundColor Green
+}
+catch {
+    Write-Host "Error stopping MicrosoftEdgeUpdate processes: $_" -ForegroundColor Red
+}
+
+# 4. Disable Edge Update services
+Write-Host "Disabling Edge Update services..." -ForegroundColor Cyan
+
+$services = @("edgeupdate", "edgeupdatem")
+foreach ($service in $services) {
+    try {
+        $svc = Get-Service -Name $service -ErrorAction SilentlyContinue
+        if ($svc) {
+            # Stop the service if it's running
+            if ($svc.Status -eq "Running") {
+                Stop-Service -Name $service -Force -ErrorAction SilentlyContinue
+            }
+            # Disable the service
+            Set-Service -Name $service -StartupType Disabled -ErrorAction SilentlyContinue
+            Write-Host "Disabled service: $service" -ForegroundColor Green
+        }
+    }
+    catch {
+        Write-Host "Error configuring service $($service): $_" -ForegroundColor Red
+    }
+}
+
+# 5. Remove scheduled update tasks
+Write-Host "Removing Edge Update scheduled tasks..." -ForegroundColor Cyan
+
+$TasksToRemove = @(
+    "MicrosoftEdgeUpdateBrowserReplacementTask",
+    "MicrosoftEdgeUpdateTaskMachineCore",
+    "MicrosoftEdgeUpdateTaskMachineUA"
+)
+
+foreach ($taskName in $TasksToRemove) {
+    try {
+        $task = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
+        if ($task) {
+            # Disable task first if enabled
+            if ($task.State -ne "Disabled") {
+                $task | Disable-ScheduledTask -ErrorAction SilentlyContinue | Out-Null
+            }
+            # Delete the task
+            $task | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue | Out-Null
+            Write-Host "Removed task: $taskName" -ForegroundColor Green
+        }
+    }
+    catch {
+        Write-Host "Failed to remove task ${taskName}: $_" -ForegroundColor Yellow
+    }
+}
+
+# 6. Apply additional registry tweaks
+Write-Host "Applying additional registry tweaks..." -ForegroundColor Cyan
 $RegFileUrl = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/vi.edge.reg"
 $RegFile = "$env:TEMP\edge_settings.reg"
 
@@ -73,43 +139,10 @@ catch {
     Write-Host "Error downloading or applying registry file: $_" -ForegroundColor Red
 }
 
-# 4. Remove Edge Update scheduled tasks
-Write-Host "Removing Edge Update scheduled tasks..." -ForegroundColor Cyan
-
-$TasksToRemove = @(
-    "MicrosoftEdgeUpdateBrowserReplacementTask"
-    "*MicrosoftEdgeUpdateTaskMachineCore*"
-    "*MicrosoftEdgeUpdateTaskMachineUA*"
-)
-
-foreach ($pattern in $TasksToRemove) {
-    try {
-        $tasks = Get-ScheduledTask | Where-Object { $_.TaskName -like $pattern }
-        
-        foreach ($task in $tasks) {
-            try {
-                # Disable task first if enabled
-                if ($task.State -ne "Disabled") {
-                    $task | Disable-ScheduledTask -ErrorAction SilentlyContinue | Out-Null
-                }
-                
-                # Delete the task
-                $task | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue | Out-Null
-                Write-Host "Removed task: $($task.TaskName)" -ForegroundColor Green
-            }
-            catch {
-                Write-Host "Failed to remove task $($task.TaskName): $_" -ForegroundColor Yellow
-            }
-        }
-    }
-    catch {
-        Write-Host "Error processing task pattern '$pattern': $_" -ForegroundColor Yellow
-    }
-}
-
 # Cleanup temporary files
 Remove-Item -Path $EdgeInstaller -ErrorAction SilentlyContinue
 Remove-Item -Path $RegFile -ErrorAction SilentlyContinue
 
 Write-Host "`nMicrosoft Edge clean installation completed!" -ForegroundColor Green
+Write-Host "Manual updates from Settings will work, but automatic updates are completely disabled." -ForegroundColor Yellow
 Write-Host "Recommendation: Restart your computer to apply all changes." -ForegroundColor Yellow
