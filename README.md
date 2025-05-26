@@ -3,14 +3,11 @@
 > **Note:** This guide helps you remove unnecessary features from Microsoft Edge while preserving essential functions like sync, extensions, and security settings.
 
 ### Steps will be executed sequentially as follows:
-
-1. Install or update Edge Stable (the stable version) from Microsoft
-2. Prevent Edge from auto-updating via the registry  
-3. Remove Edge's automatic update tasks:  
-   - `MicrosoftEdgeUpdateBrowserReplacementTask`  
-   - `MicrosoftEdgeUpdateTaskMachineCore`  
-   - `MicrosoftEdgeUpdateTaskMachineUA`  
-4. Remove unnecessary Microsoft Edge features, keeping only essential functionalities such as:  
+- Automatically and silently install Microsoft Edge
+- Completely disable automatic updates and background processes of Edge
+- Delete scheduled tasks created by Edge
+- Still allow manual updates from within the Edge interface (`edge://settings/help`)
+- Remove unnecessary Microsoft Edge features, keeping only essential functionalities such as:  
    - Data Sync
    - Auto Page Translate
    - Favorites Bar
