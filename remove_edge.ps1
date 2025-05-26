@@ -93,25 +93,6 @@ foreach ($regKey in $edgeRegKeys) {
     }
 }
 
-# Remove user data
-Write-Host "Removing user data..."
-$edgeDataPaths = @(
-    "$env:LOCALAPPDATA\Microsoft\Edge",
-    "$env:LOCALAPPDATA\Microsoft\EdgeUpdate",
-    "$env:APPDATA\Microsoft\Edge",
-    "$env:APPDATA\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\Microsoft Edge.lnk"
-)
-
-foreach ($dataPath in $edgeDataPaths) {
-    if (Test-Path $dataPath) {
-        try {
-            Remove-Item -Path $dataPath -Recurse -Force -ErrorAction Stop
-        } catch {
-            Write-Host "Failed to remove user data at $dataPath : $_" -ForegroundColor Yellow
-        }
-    }
-}
-
 Write-Host "Microsoft Edge has been completely removed!" -ForegroundColor Green
 Write-Host "Note: Windows Update may reinstall Edge in future updates." -ForegroundColor Yellow
 pause
