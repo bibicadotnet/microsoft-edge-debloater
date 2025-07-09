@@ -19,6 +19,10 @@ Run the command below in PowerShell:
 ```
 irm https://go.bibica.net/edge | iex
 ```
+Or use the version that completely disables updates
+```
+irm https://go.bibica.net/edge_disable_update | iex
+```
 ## Remove Microsoft Edge
 Run the command below in PowerShell:
 ```
