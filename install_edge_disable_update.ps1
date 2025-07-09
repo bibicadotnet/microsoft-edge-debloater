@@ -98,6 +98,9 @@ function Stop-EdgeProcesses {
 # 0. Stop all Edge processes before installation
 Stop-EdgeProcesses
 
+# Define the Edge installer path early
+$EdgeInstaller = "$env:TEMP\MicrosoftEdgeSetup.exe"
+
 # Ensure the installer file is not in use or delete it if it exists from a previous failed attempt.
 if (Test-Path $EdgeInstaller) {
     try {
@@ -111,7 +114,6 @@ if (Test-Path $EdgeInstaller) {
 
 # 1. Download and install Edge silently with retry
 Write-Host "Starting Microsoft Edge download and installation..." -ForegroundColor Cyan
-$EdgeInstaller = "$env:TEMP\MicrosoftEdgeSetup.exe"
 
 try {
     # Download Edge installer with retry
