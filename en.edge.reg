@@ -59,7 +59,7 @@ Windows Registry Editor Version 5.00
 "AccessibilityImageLabelsEnabled"=dword:00000000
 
 ;Disable Bing search provider in address bar
-"AddressBarMicrosoftSearchInBingProviderEnabled"=dword:00000000
+;"AddressBarMicrosoftSearchInBingProviderEnabled"=dword:00000000
 
 ;Disable games menu
 "AllowGamesMenu"=dword:00000000
