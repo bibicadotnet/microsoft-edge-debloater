@@ -59,7 +59,7 @@ function Invoke-WithRetry {
 function Stop-EdgeProcesses {
     Write-Host "Checking for running Edge processes..." -ForegroundColor Cyan
     
-    $edgeProcesses = @("msedge", "MicrosoftEdgeUpdate", "edgeupdate", "edgeupdatem")
+    $edgeProcesses = @("msedge", "MicrosoftEdgeUpdate", "edgeupdate", "edgeupdatem", "MicrosoftEdgeSetup") # Added MicrosoftEdgeSetup
     $browserRunning = $false
     
     foreach ($process in $edgeProcesses) {
@@ -93,6 +93,7 @@ function Stop-EdgeProcesses {
     else {
         Write-Host "No Edge processes were running." -ForegroundColor Green
     }
+    Start-Sleep -Seconds 5 # Add a small delay to ensure processes are truly stopped
 }
 
 # 0. Stop all Edge processes before installation
