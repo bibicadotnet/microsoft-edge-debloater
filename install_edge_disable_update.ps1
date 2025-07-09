@@ -98,6 +98,17 @@ function Stop-EdgeProcesses {
 # 0. Stop all Edge processes before installation
 Stop-EdgeProcesses
 
+# Ensure the installer file is not in use or delete it if it exists from a previous failed attempt.
+if (Test-Path $EdgeInstaller) {
+    try {
+        Remove-Item -Path $EdgeInstaller -Force -ErrorAction Stop
+        Write-Host "Removed old installer file: $EdgeInstaller" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "[WARNING] Could not remove old installer file: $EdgeInstaller. It might be in use. Error: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
+}
+
 # 1. Download and install Edge silently with retry
 Write-Host "Starting Microsoft Edge download and installation..." -ForegroundColor Cyan
 $EdgeInstaller = "$env:TEMP\MicrosoftEdgeSetup.exe"
@@ -266,7 +277,7 @@ catch {
 }
 
 # Then apply the custom vi.edge.reg settings
-$RegFileUrl = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/en.edge.reg"
+$RegFileUrl = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/vi.edge.reg"
 $RegFile = "$env:TEMP\edge_settings.reg"
 
 try {
