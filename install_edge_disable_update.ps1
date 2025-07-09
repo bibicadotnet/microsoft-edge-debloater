@@ -303,5 +303,7 @@ Remove-Item -Path $EdgeInstaller -ErrorAction SilentlyContinue
 Remove-Item -Path $RegFile -ErrorAction SilentlyContinue
 
 Write-Host "`nMicrosoft Edge clean installation completed!" -ForegroundColor Green
-Write-Host "Manual updates from Settings will work, but automatic updates are completely disabled." -ForegroundColor Yellow
+Write-Host "All Microsoft Edge updates (automatic and manual via the updater) have been completely disabled." -ForegroundColor Green
 Write-Host "Recommendation: Restart your computer to apply all changes." -ForegroundColor Yellow
+
+Write-Host "Script execution finished." -ForegroundColor Green
