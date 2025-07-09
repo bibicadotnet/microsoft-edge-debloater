@@ -378,3 +378,6 @@ Windows Registry Editor Version 5.00
 
 ;Disable Startup Boost
 "StartupBoostEnabled"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
+"1"="jaadjnlkjnhohljficgoddcjmndjfdmi"
