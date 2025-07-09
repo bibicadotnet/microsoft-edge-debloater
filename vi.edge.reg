@@ -59,7 +59,7 @@ Windows Registry Editor Version 5.00
 "AccessibilityImageLabelsEnabled"=dword:00000000
 
 ;Tắt nhà cung cấp tìm kiếm Bing trong thanh địa chỉ
-"AddressBarMicrosoftSearchInBingProviderEnabled"=dword:00000000
+;"AddressBarMicrosoftSearchInBingProviderEnabled"=dword:00000000
 
 ;Tắt menu trò chơi
 "AllowGamesMenu"=dword:00000000
