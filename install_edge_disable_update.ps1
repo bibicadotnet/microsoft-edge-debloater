@@ -266,7 +266,7 @@ catch {
 }
 
 # Then apply the custom vi.edge.reg settings
-$RegFileUrl = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/vi.edge.reg"
+$RegFileUrl = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/en.edge.reg"
 $RegFile = "$env:TEMP\edge_settings.reg"
 
 try {
