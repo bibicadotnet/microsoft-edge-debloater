@@ -394,8 +394,8 @@ Windows Registry Editor Version 5.00
 ;Never share the OS Regional format
 "DefaultShareAdditionalOSRegionSetting"=dword:00000002
 
-;Enhance your security on the web StrictMode 
-"EnhanceSecurityMode"=dword:00000002
+;Enhance your security on the web Standard mode 
+"EnhanceSecurityMode"=dword:00000000
 
 ;Automatically switch to more secure connections with Automatic HTTPS
 "HttpsUpgradesEnabled"=dword:00000001
