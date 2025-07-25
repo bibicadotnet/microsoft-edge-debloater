@@ -322,9 +322,6 @@ Windows Registry Editor Version 5.00
 ;Tắt DNS client tích hợp
 "BuiltInDnsClientEnabled"=dword:00000000
 
-;Tắt dự đoán mạng
-"NetworkPredictionOptions"=dword:00000000
-
 ;Tắt chế độ hiệu suất cao
 "HighEfficiencyModeEnabled"=dword:00000000
 
@@ -378,6 +375,30 @@ Windows Registry Editor Version 5.00
 
 ;Tắt tính năng Startup boost
 "StartupBoostEnabled"=dword:00000000
+
+; Tắt Preload pages
+"NetworkPredictionOptions"=dword:00000002
+
+; Bật Use graphics acceleration when available
+"HardwareAccelerationModeEnabled"=dword:00000001
+
+; Tắt rò rỉ IP WebRTC bằng cách thiết lập WebRtcLocalhostIpHandling thành disable_non_proxied_udp
+"WebRtcLocalhostIpHandling"="disable_non_proxied_udp"
+
+; Không cho phép các trang web liên quan xem hoạt động của bạn trong nhóm
+"RelatedWebsiteSetsEnabled"=dword:00000000
+
+;Block third-party cookies
+"BlockThirdPartyCookies"=dword:00000000
+
+;Never share the OS Regional format
+"DefaultShareAdditionalOSRegionSetting"=dword:00000002
+
+;Enhance your security on the web StrictMode 
+"EnhanceSecurityMode"=dword:00000002
+
+;Automatically switch to more secure connections with Automatic HTTPS
+"HttpsUpgradesEnabled"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 "1"="ihknoknoahjhldmpdoajjdkfjhddgpcd"
