@@ -22,7 +22,7 @@ This command will download and run the script to install, configure, and complet
 ## Remove Microsoft Edge
 Run the command below in PowerShell with **Administrator privileges**:
 ```powershell
-irm https://go.bibica.net/remove_edge | iex
+iex "&{$(irm https://cdn.jsdelivr.net/gh/he3als/EdgeRemover@main/get.ps1)} -UninstallEdge"
 ```
 
 ## Only Debloater
