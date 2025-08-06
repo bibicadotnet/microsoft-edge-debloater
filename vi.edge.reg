@@ -411,6 +411,11 @@ Windows Registry Editor Version 5.00
 ; Disable the default browser check on startup
 "DefaultBrowserSettingEnabled"=dword:00000000
 
+; Performance
+"SleepingTabsEnabled"=dword:00000001
+"SleepingTabsTimeout"=dword:00000384	;15 phút
+"EfficiencyModeEnabled"=dword:00000000
+
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 "1"="khdnagehanbomfdogegmpddmcalmdnbg"  ; Minimal New Tab
 
