@@ -1,5 +1,9 @@
 Windows Registry Editor Version 5.00
 
+; Phục hồi về mặc định
+[-HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Edge]
+
+; Cấu hình cài đặt
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
 ;Tắt màn hình chào mừng khi khởi chạy Edge lần đầu
 "HideFirstRunExperience"=dword:00000001
@@ -400,5 +404,12 @@ Windows Registry Editor Version 5.00
 ;Automatically switch to more secure connections with Automatic HTTPS
 "HttpsUpgradesEnabled"=dword:00000001
 
+; Change default search engine (Google)
+"ManagedSearchEngines"="[{\"is_default\":true,\"keyword\":\"google.com\",\"name\":\"Google\",\"search_url\":\"https://www.google.com/search?q={searchTerms}\",\"suggest_url\":\"https://www.google.com/complete/search?output=chrome&q={searchTerms}\"}]"
+
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 "1"="khdnagehanbomfdogegmpddmcalmdnbg"  ; Minimal New Tab
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionSettings]
+; Canvas Blocker - Fingerprint Protect
+"ahiddppepedlomdleppkbljnmkchlmdc"="{\"update_url\":\"https://edge.microsoft.com/extensionwebstorebase/v1/crx\",\"installation_mode\":\"normal_installed\"}"
