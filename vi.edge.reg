@@ -330,9 +330,6 @@ Windows Registry Editor Version 5.00
 ;Tắt quy trình xác thực chủ động
 "ProactiveAuthWorkflowEnabled"=dword:00000000
 
-;Tắt ngữ cảnh trang Copilot (lặp lại)
-"CopilotPageContextEnabled"=dword:00000000
-
 ;Tắt đồng bộ yêu thích Application Guard
 "ApplicationGuardFavoritesSyncEnabled"=dword:00000000
 
