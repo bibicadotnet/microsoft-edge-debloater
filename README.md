@@ -1,4 +1,4 @@
-# Microsoft Edge Debloater (Disable and Optimize)
+# Microsoft Edge Debloater
 
 > **Note:** This guide helps you install, optimize, and completely disable updates for Microsoft Edge, while preserving essential functions like sync, extensions, and security settings.
 
