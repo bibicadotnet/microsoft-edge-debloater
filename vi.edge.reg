@@ -425,4 +425,4 @@ Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionSettings]
 ; Cài đặt plugin Canvas Blocker - Fingerprint Protect (có thể tắt nếu thích)
-"ahiddppepedlomdleppkbljnmkchlmdc"="{\"update_url\":\"https://edge.microsoft.com/extensionwebstorebase/v1/crx\",\"installation_mode\":\"normal_installed\"}"
+; "ahiddppepedlomdleppkbljnmkchlmdc"="{\"update_url\":\"https://edge.microsoft.com/extensionwebstorebase/v1/crx\",\"installation_mode\":\"normal_installed\"}"
