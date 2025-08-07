@@ -246,7 +246,7 @@ Windows Registry Editor Version 5.00
 "EdgeShoppingAssistantEnabled"=dword:00000000
 
 ;Tắt dịch vụ thử nghiệm và cấu hình
-"ExperimentationAndConfigurationServiceControl"=dword:00000000
+;"ExperimentationAndConfigurationServiceControl"=dword:00000000
 
 ;Tắt phản hồi người dùng
 "UserFeedbackAllowed"=dword:00000000
@@ -417,7 +417,7 @@ Windows Registry Editor Version 5.00
 "EfficiencyModeEnabled"=dword:00000000
 
 ; Hiển thị nút tải xuống trên thanh công cụ
-;"ShowDownloadsToolbarButton"=dword:00000001
+"ShowDownloadsToolbarButton"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 ; Cài đặt plugin Minimal New Tab
