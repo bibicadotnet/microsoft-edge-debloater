@@ -1,10 +1,11 @@
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "Restarting as administrator..." -ForegroundColor Red
-    if ([string]::IsNullOrEmpty($PSCommandPath)) {
-        Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://go.bibica.net/edge_disable_update | iex`"" -Verb RunAs
+    $arg = if ([string]::IsNullOrEmpty($PSCommandPath)) {
+        "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://go.bibica.net/edge_disable_update | iex`""
     } else {
-        Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+        "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`""
     }
+    Start-Process powershell.exe $arg -Verb RunAs
     exit
 }
 
@@ -16,65 +17,45 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 Clear-Host
 Write-Host " Microsoft Edge Browser Installer " -BackgroundColor DarkGreen
 
-$json = Invoke-RestMethod "https://edgeupdates.microsoft.com/api/products" -UseBasicParsing
-$stableProduct = $json | Where-Object { $_.Product -eq "Stable" }
-$filtered = $stableProduct.Releases | Where-Object {
-    $_.Platform -eq "Windows" -and $_.Architecture -eq "x64"
+$current = "Not Installed"
+$edgePath = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+if (Test-Path $edgePath) {
+    $current = (Get-Item $edgePath).VersionInfo.ProductVersion
 }
-$latest = $filtered | Sort-Object PublishedTime -Descending | Select-Object -First 1
 
-Write-Host "`nLatest Stable Edge version  : $($latest.ProductVersion)"
+$latest = ((irm https://edgeupdates.microsoft.com/api/products).Where({ $_.Product -eq "Stable" }).Releases |
+    Where-Object { $_.Platform -eq "Windows" -and $_.Architecture -eq "x64" } |
+    Sort-Object PublishedTime -Descending)[0].ProductVersion
 
+Write-Host "`nCurrent Edge version        : $current" -ForegroundColor Yellow
+Write-Host "Latest Stable Edge version  : $latest" -ForegroundColor Green
 Write-Host "`nStarting download and installation..." -ForegroundColor Cyan
 
 # Create temp folder
-$tempDir = "$env:TEMP\EdgeInstall_$(Get-Random)"
-New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
+$tempDir = "$env:USERPROFILE\Downloads\microsoft-edge-debloater"
+if (-not (Test-Path $tempDir)) { New-Item $tempDir -ItemType Directory | Out-Null }
 
 # Download & install
-$installer = "$tempDir\MicrosoftEdgeSetup.exe"
-$webClient = New-Object System.Net.WebClient
-try {
-    $webClient.DownloadFile("https://go.microsoft.com/fwlink/?linkid=2109047&Channel=Stable&language=en", $installer)
-}
-finally {
-    $webClient.Dispose()
-}
-Start-Process -FilePath $installer -ArgumentList "/silent /install" -Wait
+$installer="$tempDir\MicrosoftEdgeSetup.exe"
+$wc=New-Object Net.WebClient
+try{$wc.DownloadFile("https://go.microsoft.com/fwlink/?linkid=2109047&Channel=Stable&language=en",$installer)}finally{$wc.Dispose()}
+Start-Process $installer "/silent /install" -Wait
 
 # Remove scheduled tasks
 Get-ScheduledTask -TaskName "MicrosoftEdgeUpdate*" -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue
 
-# Disable updater executables
-Get-Item "${env:ProgramFiles}\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe", "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe" -ErrorAction SilentlyContinue | ForEach-Object {
-    Get-Process -Name $_.BaseName -ErrorAction SilentlyContinue | Stop-Process -Force
-    $disabled = $_.FullName + ".disabled"
-    Rename-Item -Path $_.FullName -NewName $disabled -Force -ErrorAction SilentlyContinue
-    New-Item -Path $_.FullName -ItemType File -Force | Out-Null
-    (Get-Item $_.FullName -ErrorAction SilentlyContinue).Attributes = "ReadOnly, Hidden, System"
-}
+# Bypass updater by hosts
+cmd /c "FIND /C /I `"msedge.api.cdp.microsoft.com`" `"$env:WINDIR\system32\drivers\etc\hosts`"" | Out-Null; if ($LASTEXITCODE -ne 0) { Add-Content "$env:WINDIR\system32\drivers\etc\hosts" "`n0.0.0.0                   msedge.api.cdp.microsoft.com" }
 
 # Apply registry tweaks
-@(
-    @{ "name" = "restore"; "url" = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/restore-default.reg" },
-    @{ "name" = "debloat"; "url" = "https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/vi.edge.reg" }
-) | ForEach-Object {
-    try {
-        $regFile = "$tempDir\$($_.name).reg"
-        $webClient = New-Object System.Net.WebClient
-        try {
-            $webClient.DownloadFile($_.url, $regFile)
-        }
-        finally {
-            $webClient.Dispose()
-        }
-        Start-Process "regedit.exe" -ArgumentList "/s `"$regFile`"" -Wait -NoNewWindow
-    }
-    catch { }
-}
+$regUrl="https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/vi.edge.reg"
+$regFile="$tempDir\debloat.reg"
+$wc=New-Object Net.WebClient
+try{$wc.DownloadFile($regUrl,$regFile)}finally{$wc.Dispose()}
+Start-Process regedit "/s `"$regFile`"" -Wait -NoNewWindow
 
 # Clean up
-Remove-Item $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+#Remove-Item $tempDir -Recurse -Force -ErrorAction SilentlyContinue
 
 Write-Host "`nMicrosoft Edge Browser installation completed!" -ForegroundColor Green
 Write-Host "`nAutomatic updates are completely disabled." -ForegroundColor Yellow
