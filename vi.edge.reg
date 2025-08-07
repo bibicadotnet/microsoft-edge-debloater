@@ -392,33 +392,37 @@ Windows Registry Editor Version 5.00
 ; Không cho phép các trang web liên quan xem hoạt động của bạn trong nhóm
 "RelatedWebsiteSetsEnabled"=dword:00000000
 
-;Block third-party cookies
-"BlockThirdPartyCookies"=dword:00000000
+;Block third-party cookies (Ngăn các trang web sử dụng cookie theo dõi bạn trên web)
+"BlockThirdPartyCookies"=dword:00000001
 
-;Never share the OS Regional format
+;Never share additional operating system region
 "DefaultShareAdditionalOSRegionSetting"=dword:00000002
 
-;Enhance your security on the web Standard mode 
+;Enhance your security on the web Standard mode (bật bảo mật tiêu chuẩn)
 "EnhanceSecurityMode"=dword:00000000
 
-;Automatically switch to more secure connections with Automatic HTTPS
+; Tự động chạy HTTPS
 "HttpsUpgradesEnabled"=dword:00000001
 "HttpsOnlyMode"="force_enabled"
 
-; Change default search engine
+; Change default search Google (dùng duy nhất Google làm tìm kiếm)
 "ManagedSearchEngines"="[{\"is_default\":true,\"keyword\":\"google.com\",\"name\":\"Google\",\"search_url\":\"https://www.google.com/search?q={searchTerms}\",\"suggest_url\":\"https://www.google.com/complete/search?output=chrome&q={searchTerms}\"}]"
 
-; Disable the default browser check on startup
+; Disable the default browser check on startup (tắt kiểm tra trình duyệt mặc định)
 "DefaultBrowserSettingEnabled"=dword:00000000
 
-; Performance
+; Performance (bật chế độ tiết kiệm RAM, các tab sau 15 phút không truy cập sẽ tự đóng)
 "SleepingTabsEnabled"=dword:00000001
 "SleepingTabsTimeout"=dword:00000384	;15 phút
 "EfficiencyModeEnabled"=dword:00000000
 
+; Hiển thị nút tải xuống trên thanh công cụ
+;"ShowDownloadsToolbarButton"=dword:00000001
+
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
-"1"="khdnagehanbomfdogegmpddmcalmdnbg"  ; Minimal New Tab
+; Cài đặt plugin Minimal New Tab
+"1"="khdnagehanbomfdogegmpddmcalmdnbg"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionSettings]
-; Canvas Blocker - Fingerprint Protect
+; Cài đặt plugin Canvas Blocker - Fingerprint Protect (có thể tắt nếu thích)
 "ahiddppepedlomdleppkbljnmkchlmdc"="{\"update_url\":\"https://edge.microsoft.com/extensionwebstorebase/v1/crx\",\"installation_mode\":\"normal_installed\"}"
