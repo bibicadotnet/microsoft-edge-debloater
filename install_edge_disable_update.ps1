@@ -35,6 +35,9 @@ Write-Host "`nStarting download and installation..." -ForegroundColor Cyan
 $tempDir = "$env:USERPROFILE\Downloads\microsoft-edge-debloater"
 if (-not (Test-Path $tempDir)) { New-Item $tempDir -ItemType Directory | Out-Null }
 
+# Remove bypass upload if have
+$h="$env:WINDIR\System32\drivers\etc\hosts"; (Get-Content $h) | Where-Object {$_ -notmatch "msedge.api.cdp.microsoft.com"} | Set-Content $h
+
 # Download & install
 $installer="$tempDir\MicrosoftEdgeSetup.exe"
 $wc=New-Object Net.WebClient
@@ -44,8 +47,14 @@ Start-Process $installer "/silent /install" -Wait
 # Remove scheduled tasks
 Get-ScheduledTask -TaskName "MicrosoftEdgeUpdate*" -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue
 
-# Bypass updater by hosts
+# Bypass update by hosts
 cmd /c "FIND /C /I `"msedge.api.cdp.microsoft.com`" `"$env:WINDIR\system32\drivers\etc\hosts`"" | Out-Null; if ($LASTEXITCODE -ne 0) { Add-Content "$env:WINDIR\system32\drivers\etc\hosts" "`n0.0.0.0                   msedge.api.cdp.microsoft.com" }
+
+# Remove EdgeUpdate
+@("msedge", "MicrosoftEdgeUpdate", "edgeupdate", "edgeupdatem", "MicrosoftEdgeSetup") | ForEach-Object {
+    Get-Process -Name $_ -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+}
+Remove-Item "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
 
 # Apply registry tweaks
 $regUrl="https://raw.githubusercontent.com/bibicadotnet/microsoft-edge-debloater/refs/heads/main/vi.edge.reg"
