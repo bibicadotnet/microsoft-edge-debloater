@@ -327,9 +327,6 @@ Windows Registry Editor Version 5.00
 ;Tắt DNS client tích hợp
 "BuiltInDnsClientEnabled"=dword:00000000
 
-;Tắt chế độ hiệu suất cao
-"HighEfficiencyModeEnabled"=dword:00000000
-
 ;Tắt quy trình xác thực chủ động
 "ProactiveAuthWorkflowEnabled"=dword:00000000
 
@@ -353,9 +350,6 @@ Windows Registry Editor Version 5.00
 
 ;Tắt cá nhân hóa trang web hàng đầu trong tùy chỉnh thanh bên
 "PersonalizeTopSitesInCustomizeSidebarEnabled"=dword:00000000
-
-;Tắt phát hiện hiệu suất tiện ích mở rộng
-"ExtensionsPerformanceDetectorEnabled"=dword:00000000
 
 ;Tắt phát hiện hiệu suất
 "PerformanceDetectorEnabled"=dword:00000000
@@ -416,6 +410,8 @@ Windows Registry Editor Version 5.00
 "SleepingTabsEnabled"=dword:00000001
 "SleepingTabsTimeout"=dword:00000384	;15 phút
 "EfficiencyModeEnabled"=dword:00000000
+"HighEfficiencyModeEnabled"=dword:00000000
+"ExtensionsPerformanceDetectorEnabled"=dword:00000000
 
 ; Hiển thị nút tải xuống trên thanh công cụ
 "ShowDownloadsToolbarButton"=dword:00000001
