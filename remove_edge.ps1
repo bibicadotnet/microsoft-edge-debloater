@@ -1,75 +1,27 @@
-# Script to completely remove Microsoft Edge from Windows
-# Requires Administrator privileges
-# Check for Administrator privileges
-if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Host "Please run this script as Administrator!" -ForegroundColor Red
-    pause
-    exit
+# Remove Microsoft Edge (requires Admin)
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "Run this script as Administrator!" -ForegroundColor Red; pause; exit
 }
 
-Write-Host "Starting Microsoft Edge removal process..." -ForegroundColor Yellow
-# Kill processes
-Write-Host "Stopping Edge processes..."
-@("msedge", "MicrosoftEdgeUpdate", "edgeupdate", "edgeupdatem", "MicrosoftEdgeSetup") | ForEach-Object {
+Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
+
+# Stop Edge-related processes
+"msedge", "MicrosoftEdgeUpdate", "edgeupdate", "edgeupdatem", "MicrosoftEdgeSetup" | ForEach-Object {
     Get-Process -Name $_ -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 }
 
-# Remove Edge using DISM (for Windows 10/11)
-Write-Host "Attempting to remove Edge with DISM..."
-try {
-    $edgePackage = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -eq "Microsoft.MicrosoftEdge" }
-    if ($edgePackage) {
-        Remove-AppxProvisionedPackage -Online -PackageName $edgePackage.PackageName -ErrorAction Stop
-        Write-Host "Successfully removed Edge provisioned package" -ForegroundColor Green
-    } else {
-        Write-Host "No Edge provisioned package found" -ForegroundColor Yellow
-    }
-} catch {
-    Write-Host "DISM removal failed: $($_.Exception.Message)" -ForegroundColor Yellow
+# Delete Edge install directories
+"${env:ProgramFiles(x86)}\Microsoft\Edge*", "${env:ProgramFiles}\Microsoft\Edge*" | ForEach-Object {
+    if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
 
-# Remove Edge packages for all users
-Write-Host "Removing Edge packages..."
-Get-AppxPackage -AllUsers -Name Microsoft.MicrosoftEdge | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
-Get-AppxPackage -AllUsers -Name Microsoft.Edge | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
-# Remove Edge Chromium versions
-Write-Host "Removing Edge installations..."
-$edgePaths = @(
-    "${env:ProgramFiles(x86)}\Microsoft\Edge",
-    "${env:ProgramFiles(x86)}\Microsoft\Edge Beta",
-    "${env:ProgramFiles(x86)}\Microsoft\Edge Dev",
-    "${env:ProgramFiles(x86)}\Microsoft\Edge Canary"
-)
-foreach ($path in $edgePaths) {
-    if (Test-Path $path) {
-        try {
-            Remove-Item -Path $path -Recurse -Force -ErrorAction Stop
-            Write-Host "Removed: $path" -ForegroundColor Green
-        } catch {
-            Write-Host "Failed to remove $path : $" -ForegroundColor Red
-        }
-    }
+# Delete Edge shortcuts
+"$env:Public\Desktop\Microsoft Edge.lnk", "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk" | ForEach-Object {
+    if (Test-Path $_) { Remove-Item $_ -Force -ErrorAction SilentlyContinue }
 }
-# Remove shortcuts
-Write-Host "Removing shortcuts..."
-$publicDesktop = [Environment]::GetFolderPath("CommonDesktopDirectory")
-$startMenu = "$env:ProgramData\Microsoft\Windows\Start Menu\Programs"
-$edgeShortcuts = @(
-    "$publicDesktop\Microsoft Edge.lnk",
-    "$startMenu\Microsoft Edge.lnk"
-)
-foreach ($shortcut in $edgeShortcuts) {
-    if (Test-Path $shortcut) {
-        try {
-            Remove-Item $shortcut -Force -ErrorAction Stop
-        } catch {
-            Write-Host "Failed to remove shortcut $shortcut : $" -ForegroundColor Yellow
-        }
-    }
-}
-# Clean registry entries
-Write-Host "Cleaning registry entries..."
-$edgeRegKeys = @(
+
+# Remove Edge registry entries
+@(
     "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge",
     "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge",
     "HKLM:\SOFTWARE\Microsoft\EdgeUpdate",
@@ -77,16 +29,9 @@ $edgeRegKeys = @(
     "HKCU:\Software\Microsoft\Edge",
     "HKCU:\Software\Microsoft\EdgeUpdate",
     "HKLM:\Software\Policies\Microsoft\Edge"
-)
-foreach ($regKey in $edgeRegKeys) {
-    if (Test-Path $regKey) {
-        try {
-            Remove-Item -Path $regKey -Recurse -Force -ErrorAction Stop
-        } catch {
-            Write-Host "Failed to remove registry key $regKey : $_" -ForegroundColor Yellow
-        }
-    }
+) | ForEach-Object {
+    if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
-Write-Host "Microsoft Edge has been completely removed!" -ForegroundColor Green
-Write-Host "Note: Windows Update may reinstall Edge in future updates." -ForegroundColor Yellow
-pause
+
+Write-Host "Microsoft Edge has been removed." -ForegroundColor Green
+Write-Host
