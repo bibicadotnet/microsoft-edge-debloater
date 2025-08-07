@@ -19,9 +19,15 @@
 ## Install
 Run the command below in PowerShell with **Administrator privileges**:
 ```powershell
-irm https://go.bibica.net/edge_disable_update | iex
+irm https://go.bibica.net/edge | iex
 ```
 This command will download and run the script to install, configure, and completely disable Edge updates.
+
+## Remove
+Run the command below in PowerShell with **Administrator privileges**:
+```powershell
+irm https://go.bibica.net/remove_edge | iex
+```
 
 ## Only Debloater
 
