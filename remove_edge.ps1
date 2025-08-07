@@ -6,14 +6,18 @@ if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     pause
     exit
 }
+
 Write-Host "Starting Microsoft Edge removal process..." -ForegroundColor Yellow
-# Stop all Edge processes
+# Kill processes
 Write-Host "Stopping Edge processes..."
-Get-Process -Name msedge, MicrosoftEdge, MicrosoftEdgeUpdate -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+@("msedge", "MicrosoftEdgeUpdate", "edgeupdate", "edgeupdatem", "MicrosoftEdgeSetup") | ForEach-Object {
+    Get-Process -Name $_ -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+}
+
 # Remove Edge using DISM (for Windows 10/11)
 Write-Host "Attempting to remove Edge with DISM..."
 try {
-    $edgePackage = Get-AppxProvisionedPackage -Online | Where-Object {$.DisplayName -eq "Microsoft.MicrosoftEdge"}
+    $edgePackage = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -eq "Microsoft.MicrosoftEdge" }
     if ($edgePackage) {
         Remove-AppxProvisionedPackage -Online -PackageName $edgePackage.PackageName -ErrorAction Stop
         Write-Host "Successfully removed Edge provisioned package" -ForegroundColor Green
@@ -21,14 +25,15 @@ try {
         Write-Host "No Edge provisioned package found" -ForegroundColor Yellow
     }
 } catch {
-    Write-Host "DISM removal failed (may not be applicable for this Windows version): $" -ForegroundColor Yellow
+    Write-Host "DISM removal failed: $($_.Exception.Message)" -ForegroundColor Yellow
 }
+
 # Remove Edge packages for all users
 Write-Host "Removing Edge packages..."
 Get-AppxPackage -AllUsers -Name Microsoft.MicrosoftEdge | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
 Get-AppxPackage -AllUsers -Name Microsoft.Edge | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue
 # Remove Edge Chromium versions
-Write-Host "Removing Edge Chromium installations..."
+Write-Host "Removing Edge installations..."
 $edgePaths = @(
     "${env:ProgramFiles(x86)}\Microsoft\Edge",
     "${env:ProgramFiles(x86)}\Microsoft\Edge Beta",
