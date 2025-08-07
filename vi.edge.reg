@@ -5,6 +5,7 @@ Windows Registry Editor Version 5.00
 
 ; Cấu hình cài đặt
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+
 ;Tắt màn hình chào mừng khi khởi chạy Edge lần đầu
 "HideFirstRunExperience"=dword:00000001
 
