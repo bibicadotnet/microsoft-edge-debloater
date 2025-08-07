@@ -11,9 +11,13 @@ Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
 }
 
 # Delete Edge install directories
-"${env:ProgramFiles(x86)}\Microsoft\Edge*", "${env:ProgramFiles}\Microsoft\Edge*" | ForEach-Object {
+"${env:ProgramFiles(x86)}\Microsoft\Edge",
+"${env:ProgramFiles(x86)}\Microsoft\Edge Beta",
+"${env:ProgramFiles(x86)}\Microsoft\Edge Dev",
+"${env:ProgramFiles(x86)}\Microsoft\Edge Canary" | ForEach-Object {
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
+
 
 # Delete Edge shortcuts
 "$env:Public\Desktop\Microsoft Edge.lnk", "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk" | ForEach-Object {
