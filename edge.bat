@@ -7,5 +7,5 @@ IF %ERRORLEVEL% NEQ 0 (
     EXIT /B
 )
 PowerShell.exe -Command "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force"
-PowerShell.exe -Command "irm https://go.bibica.net/edge_disable_update | iex"
+PowerShell.exe -Command "irm https://go.bibica.net/edge | iex"
 pause
