@@ -403,7 +403,7 @@ Windows Registry Editor Version 5.00
 ; Disable the default browser check on startup (tắt kiểm tra trình duyệt mặc định)
 "DefaultBrowserSettingEnabled"=dword:00000000
 
-; Performance (bật chế độ tiết kiệm RAM, các tab sau 15 phút không truy cập sẽ tự đóng)
+; Performance (các tab sau 15 phút không truy cập sẽ tự đóng)
 "SleepingTabsEnabled"=dword:00000001
 "SleepingTabsTimeout"=dword:00000384	;15 phút
 "EfficiencyModeEnabled"=dword:00000000
