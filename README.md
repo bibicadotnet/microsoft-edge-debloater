@@ -1,5 +1,7 @@
 # Microsoft Edge Debloater
 
+![Cy3C8dNa](https://img.bibica.net/Cy3C8dNa.png)
+
 > **Note:** This guide helps you install, optimize, and completely disable updates for Microsoft Edge, while preserving essential functions like sync, extensions, and security settings.
 
 -   Automatically and silently installs the latest Stable version of Microsoft Edge.
