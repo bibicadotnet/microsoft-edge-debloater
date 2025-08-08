@@ -15,7 +15,8 @@ Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
     "${env:ProgramFiles(x86)}\Microsoft\Edge Beta",
     "${env:ProgramFiles(x86)}\Microsoft\Edge Dev",
     "${env:ProgramFiles(x86)}\Microsoft\Edge Canary",
-    "${env:ProgramFiles(x86)}\Microsoft\EdgeCore"
+    "${env:ProgramFiles(x86)}\Microsoft\EdgeCore",
+    "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate"
 ) | ForEach-Object {
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
@@ -53,7 +54,8 @@ foreach ($name in $shortcutNames) {
     "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate",
     "HKCU:\Software\Microsoft\Edge",
     "HKCU:\Software\Microsoft\EdgeUpdate",
-    "HKLM:\Software\Policies\Microsoft\Edge"
+    "HKLM:\Software\Policies\Microsoft\Edge",
+    "HKLM:\Software\Policies\Microsoft\EdgeUpdate"    
 ) | ForEach-Object {
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
