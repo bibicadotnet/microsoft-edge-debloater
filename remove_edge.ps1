@@ -2,7 +2,6 @@
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "Run this script as Administrator!" -ForegroundColor Red; pause; exit
 }
-
 Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
 
 # Stop Edge-related processes
@@ -11,17 +10,38 @@ Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
 }
 
 # Delete Edge install directories
-"${env:ProgramFiles(x86)}\Microsoft\Edge",
-"${env:ProgramFiles(x86)}\Microsoft\Edge Beta",
-"${env:ProgramFiles(x86)}\Microsoft\Edge Dev",
-"${env:ProgramFiles(x86)}\Microsoft\Edge Canary" | ForEach-Object {
+@(
+    "${env:ProgramFiles(x86)}\Microsoft\Edge",
+    "${env:ProgramFiles(x86)}\Microsoft\Edge Beta",
+    "${env:ProgramFiles(x86)}\Microsoft\Edge Dev",
+    "${env:ProgramFiles(x86)}\Microsoft\Edge Canary"
+) | ForEach-Object {
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
 
+$shortcutNames = @(
+    "Microsoft Edge",
+    "Microsoft Edge Beta",
+    "Microsoft Edge Dev",
+    "Microsoft Edge Canary"
+)
 
-# Delete Edge shortcuts
-"$env:Public\Desktop\Microsoft Edge.lnk", "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk" | ForEach-Object {
-    if (Test-Path $_) { Remove-Item $_ -Force -ErrorAction SilentlyContinue }
+$commonProgramsMicrosoft = Join-Path ([Environment]::GetFolderPath("CommonPrograms")) "Microsoft"
+
+$locations = @(
+    [Environment]::GetFolderPath("Desktop"),
+    [Environment]::GetFolderPath("CommonDesktopDirectory"),
+    [Environment]::GetFolderPath("Programs"),
+    $commonProgramsMicrosoft
+)
+
+foreach ($name in $shortcutNames) {
+    foreach ($location in $locations) {
+        $path = Join-Path $location "$name.lnk"
+        if (Test-Path $path) {
+            Remove-Item $path -Force -ErrorAction SilentlyContinue
+        }
+    }
 }
 
 # Remove Edge registry entries
@@ -36,6 +56,9 @@ Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
 ) | ForEach-Object {
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
+
+# Remove EdgeUpdate folder
+Remove-Item "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
 
 Write-Host "Microsoft Edge has been removed." -ForegroundColor Green
 Write-Host
