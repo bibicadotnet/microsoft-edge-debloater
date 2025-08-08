@@ -413,6 +413,9 @@ Windows Registry Editor Version 5.00
 ; Hiển thị nút tải xuống trên thanh công cụ
 "ShowDownloadsToolbarButton"=dword:00000001
 
+;Copilot sẽ không xuất hiện trên thanh công cụ
+"Microsoft365CopilotChatIconEnabled"=dword:00000000
+
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 ; Cài đặt plugin Minimal New Tab
 "1"="khdnagehanbomfdogegmpddmcalmdnbg"
