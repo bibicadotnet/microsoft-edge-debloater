@@ -1,29 +1,15 @@
 param(
-    [switch]$beta,
-    [switch]$dev,
-    [switch]$canary
+    [Parameter(Mandatory=$false)]
+    [ValidateSet("stable", "beta", "dev", "canary")]
+    [string]$Channel = "stable"
 )
-
-# Determine channel
-$Channel = "stable"
-if ($beta) { $Channel = "beta" }
-elseif ($dev) { $Channel = "dev" }
-elseif ($canary) { $Channel = "canary" }
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "Restarting as administrator..." -ForegroundColor Red
     $arg = if ([string]::IsNullOrEmpty($PSCommandPath)) {
-        $switchArg = ""
-        if ($beta) { $switchArg = " -beta" }
-        elseif ($dev) { $switchArg = " -dev" }
-        elseif ($canary) { $switchArg = " -canary" }
-        "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://go.bibica.net/edge | iex$switchArg`""
+        "-NoProfile -ExecutionPolicy Bypass -Command `"&{`$Channel='$Channel'; irm https://go.bibica.net/edge | iex}`""
     } else {
-        $switchArg = ""
-        if ($beta) { $switchArg = " -beta" }
-        elseif ($dev) { $switchArg = " -dev" }
-        elseif ($canary) { $switchArg = " -canary" }
-        "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"$switchArg"
+        "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Channel $Channel"
     }
     Start-Process powershell.exe $arg -Verb RunAs
     exit
@@ -94,11 +80,10 @@ Write-Host "Recommendation: Restart your computer to apply all changes." -Foregr
 
 Write-Host "`nNOTICE: To update Microsoft Edge when needed, please:" -ForegroundColor Cyan -BackgroundColor DarkGreen
 Write-Host "1. Open PowerShell with Administrator privileges" -ForegroundColor White
-$updateCommand = switch ($Channel) {
-    "stable" { "irm https://go.bibica.net/edge | iex" }
-    "beta" { "irm https://go.bibica.net/edge | iex --beta" }
-    "dev" { "irm https://go.bibica.net/edge | iex --dev" }
-    "canary" { "irm https://go.bibica.net/edge | iex --canary" }
+$updateCommand = if ($Channel -eq "stable") {
+    "irm https://go.bibica.net/edge | iex"
+} else {
+    "irm https://go.bibica.net/edge | iex -Channel $Channel"
 }
 Write-Host "2. Run the following command: $updateCommand" -ForegroundColor Yellow
 Write-Host "3. Wait for the installation process to complete" -ForegroundColor White
