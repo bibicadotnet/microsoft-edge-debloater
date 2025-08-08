@@ -2,6 +2,7 @@ Windows Registry Editor Version 5.00
 
 ; Phục hồi về mặc định
 [-HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Edge]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\EdgeUpdate]
 
 ; Cấu hình cài đặt
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
@@ -395,7 +396,7 @@ Windows Registry Editor Version 5.00
 
 ; Tự động chạy HTTPS
 "HttpsUpgradesEnabled"=dword:00000001
-"HttpsOnlyMode"="force_enabled"  ;On Windows and macOS since 140 or later
+;"HttpsOnlyMode"="force_enabled"  ;On Windows and macOS since 140 or later
 
 ; Change default search Google (dùng duy nhất Google làm tìm kiếm)
 "ManagedSearchEngines"="[{\"is_default\":true,\"keyword\":\"google.com\",\"name\":\"Google\",\"search_url\":\"https://www.google.com/search?q={searchTerms}\",\"suggest_url\":\"https://www.google.com/complete/search?output=chrome&q={searchTerms}\"}]"
