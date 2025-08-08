@@ -1,7 +1,7 @@
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "Restarting as administrator..." -ForegroundColor Red
     $arg = if ([string]::IsNullOrEmpty($PSCommandPath)) {
-        "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://go.bibica.net/edge_disable_update | iex`""
+        "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://go.bibica.net/edge | iex`""
     } else {
         "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`""
     }
