@@ -5,7 +5,7 @@
 > **Note:** This guide helps you install, optimize, and completely disable updates for Microsoft Edge, while preserving essential functions like sync, extensions, and security settings.
 
 -   Automatically and silently installs the latest Stable version of Microsoft Edge.
--   Completely disables all Microsoft Edge updates
+-   Completely disables all Microsoft Edge updates, remove unnecessary files
 -   Applies registry tweaks to remove unnecessary features from Edge while retaining essential functionalities:
     - Data Sync
     - Auto Page Translate
@@ -13,7 +13,7 @@
     - Manifest V2 Extension Support
     - DNS over HTTPS (DoH)
     - Google Search
-    - Force HTTPS
+    - Automatic HTTPS
     - Performance: sleeping tabs discard inactive tabs after 15 minutes to save RAM
 
 ## Install
