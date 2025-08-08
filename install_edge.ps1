@@ -72,6 +72,6 @@ Write-Host "Recommendation: Restart your computer to apply all changes." -Foregr
 
 Write-Host "`nNOTICE: To update Microsoft Edge when needed, please:" -ForegroundColor Cyan -BackgroundColor DarkGreen
 Write-Host "1. Open PowerShell with Administrator privileges" -ForegroundColor White
-Write-Host "2. Run the following command: irm https://go.bibica.net/edge_disable_update | iex" -ForegroundColor Yellow
+Write-Host "2. Run the following command: irm https://go.bibica.net/edge | iex" -ForegroundColor Yellow
 Write-Host "3. Wait for the installation process to complete" -ForegroundColor White
 Write-Host
