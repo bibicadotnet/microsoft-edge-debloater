@@ -14,7 +14,8 @@ Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
     "${env:ProgramFiles(x86)}\Microsoft\Edge",
     "${env:ProgramFiles(x86)}\Microsoft\Edge Beta",
     "${env:ProgramFiles(x86)}\Microsoft\Edge Dev",
-    "${env:ProgramFiles(x86)}\Microsoft\Edge Canary"
+    "${env:ProgramFiles(x86)}\Microsoft\Edge Canary",
+    "${env:ProgramFiles(x86)}\Microsoft\EdgeCore"
 ) | ForEach-Object {
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
