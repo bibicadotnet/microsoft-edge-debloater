@@ -342,7 +342,7 @@ Windows Registry Editor Version 5.00
 ;Tắt tự động điền ML
 "EdgeAutofillMlEnabled"=dword:00000000
 
-;Bật cài đặt mô hình nền tảng GenAI cục bộ
+;Tắt cài đặt mô hình nền tảng GenAI cục bộ
 "GenAILocalFoundationalModelSettings"=dword:00000001
 
 ;Tắt cá nhân hóa trang web hàng đầu trong tùy chỉnh thanh bên
