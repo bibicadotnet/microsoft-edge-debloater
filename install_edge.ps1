@@ -36,7 +36,7 @@ $tempDir = "$env:USERPROFILE\Downloads\microsoft-edge-debloater"
 if (-not (Test-Path $tempDir)) { New-Item $tempDir -ItemType Directory | Out-Null }
 
 # Remove bypass update if have
-# $h="$env:WINDIR\System32\drivers\etc\hosts"; (Get-Content $h) | Where-Object {$_ -notmatch "msedge.api.cdp.microsoft.com"} | Set-Content $h
+$h="$env:WINDIR\System32\drivers\etc\hosts"; (Get-Content $h) | Where-Object {$_ -notmatch "msedge.api.cdp.microsoft.com"} | Set-Content $h
 
 # Download & install
 $installer="$tempDir\MicrosoftEdgeSetup.exe"
@@ -48,7 +48,7 @@ Start-Process $installer "/silent /install" -Wait
 Get-ScheduledTask -TaskName "MicrosoftEdgeUpdate*" -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false -ErrorAction SilentlyContinue
 
 # Bypass update by hosts
-# cmd /c "FIND /C /I `"msedge.api.cdp.microsoft.com`" `"$env:WINDIR\system32\drivers\etc\hosts`"" | Out-Null; if ($LASTEXITCODE -ne 0) { Add-Content "$env:WINDIR\system32\drivers\etc\hosts" "`n0.0.0.0                   msedge.api.cdp.microsoft.com" }
+cmd /c "FIND /C /I `"msedge.api.cdp.microsoft.com`" `"$env:WINDIR\system32\drivers\etc\hosts`"" | Out-Null; if ($LASTEXITCODE -ne 0) { Add-Content "$env:WINDIR\system32\drivers\etc\hosts" "`n0.0.0.0                   msedge.api.cdp.microsoft.com" }
 
 # Remove EdgeUpdate
 @("msedge", "MicrosoftEdgeUpdate", "edgeupdate", "edgeupdatem", "MicrosoftEdgeSetup") | ForEach-Object {
