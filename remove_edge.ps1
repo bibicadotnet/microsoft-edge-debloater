@@ -34,6 +34,7 @@ $locations = @(
     [Environment]::GetFolderPath("Desktop"),
     [Environment]::GetFolderPath("CommonDesktopDirectory"),
     [Environment]::GetFolderPath("Programs"),
+    [Environment]::GetFolderPath("CommonPrograms"),
     $commonProgramsMicrosoft
 )
 
