@@ -1,15 +1,29 @@
 param(
-    [Parameter(Mandatory=$false)]
-    [ValidateSet("stable", "beta", "dev", "canary")]
-    [string]$Channel = "stable"
+    [switch]$beta,
+    [switch]$dev,
+    [switch]$canary
 )
+
+# Determine channel
+$Channel = "stable"
+if ($beta) { $Channel = "beta" }
+elseif ($dev) { $Channel = "dev" }
+elseif ($canary) { $Channel = "canary" }
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "Restarting as administrator..." -ForegroundColor Red
     $arg = if ([string]::IsNullOrEmpty($PSCommandPath)) {
-        "-NoProfile -ExecutionPolicy Bypass -Command `"&{`$Channel='$Channel'; irm https://go.bibica.net/edge | iex}`""
+        $switchArg = ""
+        if ($beta) { $switchArg = " -beta" }
+        elseif ($dev) { $switchArg = " -dev" }
+        elseif ($canary) { $switchArg = " -canary" }
+        "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://go.bibica.net/edge | iex$switchArg`""
     } else {
-        "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Channel $Channel"
+        $switchArg = ""
+        if ($beta) { $switchArg = " -beta" }
+        elseif ($dev) { $switchArg = " -dev" }
+        elseif ($canary) { $switchArg = " -canary" }
+        "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"$switchArg"
     }
     Start-Process powershell.exe $arg -Verb RunAs
     exit
@@ -20,7 +34,7 @@ Stop-Process -Name msedge,MicrosoftEdgeUpdate,edgeupdate,edgeupdatem,MicrosoftEd
 Clear-Host
 
 $channelDisplay = $Channel.Substring(0,1).ToUpper() + $Channel.Substring(1).ToLower()
-Write-Host " Microsoft Edge $channelDisplay Installer " -BackgroundColor DarkGreen
+Write-Host " Microsoft Edge Browser Installer ($channelDisplay) " -BackgroundColor DarkGreen
 
 $current = "Not Installed"
 $edgePath = switch ($Channel) {
@@ -39,7 +53,7 @@ $latest = ((irm https://edgeupdates.microsoft.com/api/products).Where({ $_.Produ
     Sort-Object PublishedTime -Descending)[0].ProductVersion
 
 Write-Host "`nCurrent Edge $channelDisplay version : $current" -ForegroundColor Yellow
-Write-Host "Latest Edge $channelDisplay version  : $latest" -ForegroundColor Green
+Write-Host "Latest $channelDisplay Edge version  : $latest" -ForegroundColor Green
 Write-Host "`nStarting download and installation..." -ForegroundColor Cyan
 
 # Create temp folder
@@ -74,18 +88,18 @@ Start-Process regedit "/s `"$regFile`"" -Wait -NoNewWindow
 # Clean up
 #Remove-Item $tempDir -Recurse -Force -ErrorAction SilentlyContinue
 
-Write-Host "`nMicrosoft Edge $channelDisplay installation completed!" -ForegroundColor Green
+Write-Host "`nMicrosoft Edge Browser installation completed!" -ForegroundColor Green
 Write-Host "`nAutomatic updates are completely disabled." -ForegroundColor Yellow
 Write-Host "Recommendation: Restart your computer to apply all changes." -ForegroundColor Yellow
 
-Write-Host "`nNOTICE: To update Microsoft Edge $channelDisplay when needed, please:" -ForegroundColor Cyan -BackgroundColor DarkGreen
+Write-Host "`nNOTICE: To update Microsoft Edge when needed, please:" -ForegroundColor Cyan -BackgroundColor DarkGreen
 Write-Host "1. Open PowerShell with Administrator privileges" -ForegroundColor White
-$updateCommand = if ($Channel -eq "stable") {
-    "irm https://go.bibica.net/edge | iex"
-} else {
-    "irm https://go.bibica.net/edge | iex $Channel"
+$updateCommand = switch ($Channel) {
+    "stable" { "irm https://go.bibica.net/edge | iex" }
+    "beta" { "irm https://go.bibica.net/edge | iex --beta" }
+    "dev" { "irm https://go.bibica.net/edge | iex --dev" }
+    "canary" { "irm https://go.bibica.net/edge | iex --canary" }
 }
-Write-Host "2. Run the following command: " -ForegroundColor Yellow -NoNewline
-Write-Host $updateCommand -ForegroundColor Red
+Write-Host "2. Run the following command: $updateCommand" -ForegroundColor Yellow
 Write-Host "3. Wait for the installation process to complete" -ForegroundColor White
 Write-Host
