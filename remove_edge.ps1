@@ -16,10 +16,14 @@ Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
     "${env:ProgramFiles(x86)}\Microsoft\Edge Dev",
     "${env:ProgramFiles(x86)}\Microsoft\Edge Canary",
     "${env:ProgramFiles(x86)}\Microsoft\EdgeCore",
-    "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate"
+    "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate",
+    "C:\Users\$env:USERNAME\AppData\Local\Microsoft\EdgeUpdate",
+    "C:\Users\$env:USERNAME\AppData\Local\Microsoft\EdgeCore",
+    "C:\Users\$env:USERNAME\AppData\Local\Microsoft\Edge SxS\Application"
 ) | ForEach-Object {
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
+
 
 $shortcutNames = @(
     "Microsoft Edge",
