@@ -4,7 +4,7 @@
 
 > **Note:** This guide helps you install, optimize, and completely disable updates for Microsoft Edge, while preserving essential functions like sync, extensions, and security settings.
 
--   Automatically and silently installs the latest Stable version of Microsoft Edge.
+-   Automatically and silently installs the latest version of Microsoft Edge (Stable, Beta, Dev, or Canary)
 -   Completely disables all Microsoft Edge updates, remove unnecessary files
 -   Applies registry tweaks to remove unnecessary features from Edge while retaining essential functionalities:
     - Data Sync
