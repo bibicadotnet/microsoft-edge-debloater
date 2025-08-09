@@ -86,6 +86,28 @@ ForEach-Object {
     }
 }
 
+# Remove Windows Installer entries
+"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData",
+"HKLM:\SOFTWARE\Classes\Installer\Products",
+"HKLM:\SOFTWARE\Classes\Installer\Features", 
+"HKLM:\SOFTWARE\Classes\Installer\UpgradeCodes" |
+ForEach-Object {
+    if (Test-Path $_) {
+        Get-ChildItem $_ -Recurse -ErrorAction SilentlyContinue | Where-Object {
+            $props = Get-ItemProperty $_.PsPath -ErrorAction SilentlyContinue
+            ($props.ProductName -like "*Microsoft Edge*") -or ($props.DisplayName -like "*Microsoft Edge*")
+        } | ForEach-Object { Remove-Item $_.PsPath -Recurse -Force -ErrorAction SilentlyContinue }
+    }
+}
+
+# Remove from RegisteredApplications
+$regApps = "HKLM:\SOFTWARE\RegisteredApplications"
+if (Test-Path $regApps) {
+    Get-ItemProperty $regApps -ErrorAction SilentlyContinue | Get-Member -MemberType NoteProperty | 
+    Where-Object { $_.Name -like "*Microsoft Edge*" } | 
+    ForEach-Object { Remove-ItemProperty -Path $regApps -Name $_.Name -ErrorAction SilentlyContinue }
+}
+
 # Remove services
 "edgeupdate", "edgeupdatem", "MicrosoftEdgeUpdate" |
     ForEach-Object { if (Get-Service -Name $_ -ErrorAction SilentlyContinue) { sc.exe delete $_ | Out-Null } }
