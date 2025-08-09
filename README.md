@@ -15,19 +15,38 @@
     - Google Search
     - Automatic HTTPS
     - Performance: sleeping tabs discard inactive tabs after 15 minutes to save RAM
+      
+---
 
-## Install
+## Install Microsoft Edge Stable (Recommended)
 Run the command below in PowerShell with **Administrator privileges**:
 ```powershell
 irm https://go.bibica.net/edge | iex
 ```
-This command will download and run the script to install, configure, and completely disable Edge updates.
+## Install Microsoft Edge Beta
+Run the command below in PowerShell with **Administrator privileges**:
+```powershell
+$env:EDGE_CHANNEL='beta'; irm https://go.bibica.net/edge | iex
+```
+## Install Microsoft Edge Dev
+Run the command below in PowerShell with **Administrator privileges**:
+```powershell
+$env:EDGE_CHANNEL='dev'; irm https://go.bibica.net/edge | iex
+```
+## Install Microsoft Edge Canary
+Run the command below in PowerShell with **Administrator privileges**:
+```powershell
+$env:EDGE_CHANNEL='canary'; irm https://go.bibica.net/edge | iex
+```
 
-## Remove
+---
+
+## Remove All Microsoft Edge Vesion
 Run the command below in PowerShell with **Administrator privileges**:
 ```powershell
 irm https://go.bibica.net/remove_edge | iex
 ```
+---
 
 ## Only Debloater
 
