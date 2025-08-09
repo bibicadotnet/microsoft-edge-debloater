@@ -24,7 +24,6 @@ Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
 
-
 $shortcutNames = @(
     "Microsoft Edge",
     "Microsoft Edge Beta",
@@ -86,7 +85,6 @@ foreach ($path in $uninstallPaths) {
     }
 }
 
-
 # Remove Edge Update services if they exist
 $services = "edgeupdate", "edgeupdatem", "MicrosoftEdgeUpdate"
 foreach ($svc in $services) {
@@ -94,7 +92,6 @@ foreach ($svc in $services) {
         sc.exe delete $svc | Out-Null
     }
 }
-
 
 # Remove EdgeUpdate folder
 Remove-Item "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
