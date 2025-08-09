@@ -1,18 +1,21 @@
 param(
-    [Parameter(Mandatory=$false)]
-    [ValidateSet("stable", "beta", "dev", "canary")]
-    [string]$Channel = "stable"
+   [Parameter(Mandatory=$false)]
+   [ValidateSet("stable", "beta", "dev", "canary")]
+   [string]$Channel = "stable"
 )
 
+# Support environment variable for irm | iex usage
+if ($env:EDGE_CHANNEL) { $Channel = $env:EDGE_CHANNEL }
+
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Host "Restarting as administrator..." -ForegroundColor Red
-    $arg = if ([string]::IsNullOrEmpty($PSCommandPath)) {
-        "-NoProfile -ExecutionPolicy Bypass -Command `"&{`$Channel='$Channel'; irm https://go.bibica.net/edge | iex}`""
-    } else {
-        "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Channel $Channel"
-    }
-    Start-Process powershell.exe $arg -Verb RunAs
-    exit
+   Write-Host "Restarting as administrator..." -ForegroundColor Red
+   $arg = if ([string]::IsNullOrEmpty($PSCommandPath)) {
+       "-NoProfile -ExecutionPolicy Bypass -Command `"&{`$env:EDGE_CHANNEL='$Channel'; irm https://go.bibica.net/edge | iex}`""
+   } else {
+       "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Channel $Channel"
+   }
+   Start-Process powershell.exe $arg -Verb RunAs
+   exit
 }
 
 # Kill processes
@@ -24,19 +27,19 @@ Write-Host " Microsoft Edge Browser Installer ($channelDisplay) " -BackgroundCol
 
 $current = "Not Installed"
 $edgePath = switch ($Channel) {
-    "stable" { "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" }
-    "beta" { "C:\Program Files (x86)\Microsoft\Edge Beta\Application\msedge.exe" }
-    "dev" { "C:\Program Files (x86)\Microsoft\Edge Dev\Application\msedge.exe" }
-    "canary" { "C:\Users\$env:USERNAME\AppData\Local\Microsoft\Edge SxS\Application\msedge.exe" }
+   "stable" { "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" }
+   "beta" { "C:\Program Files (x86)\Microsoft\Edge Beta\Application\msedge.exe" }
+   "dev" { "C:\Program Files (x86)\Microsoft\Edge Dev\Application\msedge.exe" }
+   "canary" { "C:\Users\$env:USERNAME\AppData\Local\Microsoft\Edge SxS\Application\msedge.exe" }
 }
 
 if (Test-Path $edgePath) {
-    $current = (Get-Item $edgePath).VersionInfo.ProductVersion
+   $current = (Get-Item $edgePath).VersionInfo.ProductVersion
 }
 
 $latest = ((irm https://edgeupdates.microsoft.com/api/products).Where({ $_.Product -eq $channelDisplay }).Releases |
-    Where-Object { $_.Platform -eq "Windows" -and $_.Architecture -eq "x64" } |
-    Sort-Object PublishedTime -Descending)[0].ProductVersion
+   Where-Object { $_.Platform -eq "Windows" -and $_.Architecture -eq "x64" } |
+   Sort-Object PublishedTime -Descending)[0].ProductVersion
 
 Write-Host "`nCurrent Edge $channelDisplay version : $current" -ForegroundColor Yellow
 Write-Host "Latest $channelDisplay Edge version  : $latest" -ForegroundColor Green
@@ -59,9 +62,9 @@ Get-ScheduledTask -TaskName "MicrosoftEdgeUpdate*" -ErrorAction SilentlyContinue
 # Remove EdgeUpdate & EdgeCore
 Stop-Process -Name msedge,MicrosoftEdgeUpdate,edgeupdate,edgeupdatem,MicrosoftEdgeSetup -Force -ErrorAction SilentlyContinue
 if ($Channel -eq "canary") {
-    Remove-Item "C:\Users\$env:USERNAME\AppData\Local\Microsoft\EdgeCore","C:\Users\$env:USERNAME\AppData\Local\Microsoft\EdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
+   Remove-Item "C:\Users\$env:USERNAME\AppData\Local\Microsoft\EdgeCore","C:\Users\$env:USERNAME\AppData\Local\Microsoft\EdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
 } else {
-    Remove-Item "C:\Program Files (x86)\Microsoft\EdgeCore","C:\Program Files (x86)\Microsoft\EdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
+   Remove-Item "C:\Program Files (x86)\Microsoft\EdgeCore","C:\Program Files (x86)\Microsoft\EdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
 }
 
 # Apply registry tweaks
@@ -81,9 +84,9 @@ Write-Host "Recommendation: Restart your computer to apply all changes." -Foregr
 Write-Host "`nNOTICE: To update Microsoft Edge when needed, please:" -ForegroundColor Cyan -BackgroundColor DarkGreen
 Write-Host "1. Open PowerShell with Administrator privileges" -ForegroundColor White
 $updateCommand = if ($Channel -eq "stable") {
-    "irm https://go.bibica.net/edge | iex"
+   "irm https://go.bibica.net/edge | iex"
 } else {
-    "irm https://go.bibica.net/edge | iex -Channel $Channel"
+   "`$env:EDGE_CHANNEL='$Channel'; irm https://go.bibica.net/edge | iex"
 }
 Write-Host "2. Run the following command: $updateCommand" -ForegroundColor Yellow
 Write-Host "3. Wait for the installation process to complete" -ForegroundColor White
