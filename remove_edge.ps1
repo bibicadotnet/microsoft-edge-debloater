@@ -2,7 +2,6 @@
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "Run this script as Administrator!" -ForegroundColor Red; pause; exit
 }
-
 Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
 
 # Stop Edge processes
@@ -17,9 +16,9 @@ Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
     "${env:ProgramFiles(x86)}\Microsoft\Edge Canary",
     "${env:ProgramFiles(x86)}\Microsoft\EdgeCore",
     "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate",
-    "C:\Users\$env:USERNAME\AppData\Local\Microsoft\EdgeUpdate",
-    "C:\Users\$env:USERNAME\AppData\Local\Microsoft\EdgeCore", 
-    "C:\Users\$env:USERNAME\AppData\Local\Microsoft\Edge SxS\Application"
+    "${env:LOCALAPPDATA}\Microsoft\EdgeUpdate",
+    "${env:LOCALAPPDATA}\Microsoft\EdgeCore", 
+    "${env:LOCALAPPDATA}\Microsoft\Edge SxS\Application"
 ) | ForEach-Object { if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue } }
 
 # Remove shortcuts
@@ -31,7 +30,6 @@ $locations = @(
     [Environment]::GetFolderPath("CommonPrograms"),
     (Join-Path ([Environment]::GetFolderPath("CommonPrograms")) "Microsoft")
 )
-
 $edgeVariants | ForEach-Object {
     $name = $_
     $locations | ForEach-Object {
@@ -43,7 +41,8 @@ $edgeVariants | ForEach-Object {
 # Remove registry entries
 @(
     "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge",
-    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge", 
+    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge",
+    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge Update",
     "HKLM:\SOFTWARE\Microsoft\EdgeUpdate",
     "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate",
     "HKCU:\Software\Microsoft\Edge",
@@ -52,18 +51,38 @@ $edgeVariants | ForEach-Object {
     "HKLM:\Software\Policies\Microsoft\EdgeUpdate"
 ) | ForEach-Object { if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue } }
 
+# Remove StartMenuInternet entries
+@(
+    "HKLM:\SOFTWARE\Clients\StartMenuInternet",
+    "HKLM:\SOFTWARE\WOW6432Node\Clients\StartMenuInternet", 
+    "HKCU:\SOFTWARE\Clients\StartMenuInternet"
+) | ForEach-Object {
+    if (Test-Path $_) {
+        Get-ChildItem $_ | Where-Object { $_.Name -like "*Microsoft Edge*" } | 
+        ForEach-Object { Remove-Item $_.PsPath -Recurse -Force -ErrorAction SilentlyContinue }
+    }
+}
+
 # Clean uninstall entries
 "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
 "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall", 
-"HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+"HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" |
+ForEach-Object {
+    if (Test-Path $_) {
+        Get-ChildItem $_ -ErrorAction SilentlyContinue | Where-Object {
+            $displayName = (Get-ItemProperty $_.PsPath -Name DisplayName -ErrorAction SilentlyContinue).DisplayName
+            $displayName -and $displayName -like "*Microsoft Edge*"
+        } | ForEach-Object { Remove-Item $_.PsPath -Recurse -Force -ErrorAction SilentlyContinue }
+    }
+}
+
+# Clean EdgeUpdate clients
 "HKCU:\SOFTWARE\Microsoft\EdgeUpdate\Clients",
 "HKLM:\SOFTWARE\Microsoft\EdgeUpdate\Clients",
 "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients" |
 ForEach-Object {
     if (Test-Path $_) {
-        Get-ChildItem $_ | Where-Object {
-            (Get-ItemProperty $_.PsPath -ErrorAction SilentlyContinue).DisplayName -like "*Microsoft Edge*"
-        } | ForEach-Object { Remove-Item $_.PsPath -Recurse -Force -ErrorAction SilentlyContinue }
+        Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
 
