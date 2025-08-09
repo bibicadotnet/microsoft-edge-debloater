@@ -23,7 +23,7 @@ Stop-Process -Name msedge,MicrosoftEdgeUpdate,edgeupdate,edgeupdatem,MicrosoftEd
 Clear-Host
 
 $channelDisplay = $Channel.Substring(0,1).ToUpper() + $Channel.Substring(1).ToLower()
-Write-Host " Microsoft Edge Browser Installer ($channelDisplay) " -BackgroundColor DarkGreen
+Write-Host " Microsoft Edge $channelDisplay Browser Installer " -BackgroundColor DarkGreen
 
 $current = "Not Installed"
 $edgePath = switch ($Channel) {
@@ -42,7 +42,7 @@ $latest = ((irm https://edgeupdates.microsoft.com/api/products).Where({ $_.Produ
    Sort-Object PublishedTime -Descending)[0].ProductVersion
 
 Write-Host "`nCurrent Edge $channelDisplay version : $current" -ForegroundColor Yellow
-Write-Host "Latest $channelDisplay Edge version  : $latest" -ForegroundColor Green
+Write-Host "Latest Edge $channelDisplay version  : $latest" -ForegroundColor Green
 Write-Host "`nStarting download and installation..." -ForegroundColor Cyan
 
 # Create temp folder
@@ -81,13 +81,14 @@ Write-Host "`nMicrosoft Edge Browser installation completed!" -ForegroundColor G
 Write-Host "`nAutomatic updates are completely disabled." -ForegroundColor Yellow
 Write-Host "Recommendation: Restart your computer to apply all changes." -ForegroundColor Yellow
 
-Write-Host "`nNOTICE: To update Microsoft Edge when needed, please:" -ForegroundColor Cyan -BackgroundColor DarkGreen
+Write-Host "`nNOTICE: To update Microsoft Edge $channelDisplay when needed, please:" -ForegroundColor Cyan -BackgroundColor DarkGreen
 Write-Host "1. Open PowerShell with Administrator privileges" -ForegroundColor White
 $updateCommand = if ($Channel -eq "stable") {
    "irm https://go.bibica.net/edge | iex"
 } else {
    "`$env:EDGE_CHANNEL='$Channel'; irm https://go.bibica.net/edge | iex"
 }
-Write-Host "2. Run the following command: $updateCommand" -ForegroundColor Yellow
+Write-Host "2. Run the following command: " -ForegroundColor Yellow -NoNewline
+Write-Host $updateCommand -ForegroundColor Red
 Write-Host "3. Wait for the installation process to complete" -ForegroundColor White
 Write-Host
