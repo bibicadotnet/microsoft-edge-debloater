@@ -5,7 +5,7 @@ param(
 )
 
 # Support environment variable for irm | iex usage
-if ($env:EDGE_CHANNEL) { $Channel = $env:EDGE_CHANNEL }
+if ($env:EDGE_CHANNEL) { $Channel = $env:EDGE_CHANNEL; $env:EDGE_CHANNEL = $null }
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
    Write-Host "Restarting as administrator..." -ForegroundColor Red
