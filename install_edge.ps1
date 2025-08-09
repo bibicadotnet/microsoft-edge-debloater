@@ -10,7 +10,7 @@ if ($env:EDGE_CHANNEL) { $Channel = $env:EDGE_CHANNEL }
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
    Write-Host "Restarting as administrator..." -ForegroundColor Red
    $arg = if ([string]::IsNullOrEmpty($PSCommandPath)) {
-       "-NoProfile -ExecutionPolicy Bypass -Command `"&{`$env:EDGE_CHANNEL='$Channel'; irm https://go.bibica.net/edge | iex}`""
+       "-NoProfile -ExecutionPolicy Bypass -Command `"&{`$env:EDGE_CHANNEL='$($env:EDGE_CHANNEL ?? $Channel)'; irm https://go.bibica.net/edge | iex}`""
    } else {
        "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" -Channel $Channel"
    }
