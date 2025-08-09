@@ -92,7 +92,6 @@ $services = "edgeupdate", "edgeupdatem", "MicrosoftEdgeUpdate"
 foreach ($svc in $services) {
     if (Get-Service -Name $svc -ErrorAction SilentlyContinue) {
         sc.exe delete $svc | Out-Null
-        Write-Host "Deleted service: $svc" -ForegroundColor Green
     }
 }
 
