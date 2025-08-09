@@ -4,15 +4,8 @@ param(
   [string]$Channel = "stable"
 )
 
-# Support variable from parent scope for irm | iex usage
-if ($env:EDGE_CHANNEL -or (Get-Variable Channel -Scope 1 -EA 0)) { 
-    if ($env:EDGE_CHANNEL) { 
-        $Channel = $env:EDGE_CHANNEL 
-    } else { 
-        $Channel = (Get-Variable Channel -Scope 1).Value 
-    }
-    $env:EDGE_CHANNEL = $Channel 
-}
+# Support environment variable for irm | iex usage
+if ($env:EDGE_CHANNEL) { $Channel = $env:EDGE_CHANNEL }
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
    Write-Host "Restarting as administrator..." -ForegroundColor Red
@@ -93,7 +86,7 @@ Write-Host "1. Open PowerShell with Administrator privileges" -ForegroundColor W
 $updateCommand = if ($Channel -eq "stable") {
    "irm https://go.bibica.net/edge | iex"
 } else {
-   "`$Channel='$Channel'; irm https://go.bibica.net/edge | iex"
+   "`$env:EDGE_CHANNEL='$Channel'; irm https://go.bibica.net/edge | iex"
 }
 Write-Host "2. Run the following command: $updateCommand" -ForegroundColor Yellow
 Write-Host "3. Wait for the installation process to complete" -ForegroundColor White
