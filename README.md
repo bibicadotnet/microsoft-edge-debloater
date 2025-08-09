@@ -1,4 +1,4 @@
-# Microsoft Edge Debloater
+# Microsoft Edge Installer & Debloater
 
 ![Cy3C8dNa](https://img.bibica.net/Cy3C8dNa.png)
 
