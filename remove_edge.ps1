@@ -65,6 +65,38 @@ foreach ($name in $shortcutNames) {
     if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue }
 }
 
+# Remove any uninstall registry entries with 'Microsoft Edge' in DisplayName (all scopes)
+$uninstallPaths = @(
+    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
+    "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+    "HKCU:\SOFTWARE\Microsoft\EdgeUpdate\Clients",
+    "HKLM:\SOFTWARE\Microsoft\EdgeUpdate\Clients",
+    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients"
+)
+
+foreach ($path in $uninstallPaths) {
+    if (Test-Path $path) {
+        Get-ChildItem $path | ForEach-Object {
+            $props = Get-ItemProperty $_.PsPath -ErrorAction SilentlyContinue
+            if ($props.DisplayName -like "*Microsoft Edge*") {
+                Remove-Item $_.PsPath -Recurse -Force -ErrorAction SilentlyContinue
+            }
+        }
+    }
+}
+
+
+# Remove Edge Update services if they exist
+$services = "edgeupdate", "edgeupdatem", "MicrosoftEdgeUpdate"
+foreach ($svc in $services) {
+    if (Get-Service -Name $svc -ErrorAction SilentlyContinue) {
+        sc.exe delete $svc | Out-Null
+        Write-Host "Deleted service: $svc" -ForegroundColor Green
+    }
+}
+
+
 # Remove EdgeUpdate folder
 Remove-Item "${env:ProgramFiles(x86)}\Microsoft\EdgeUpdate" -Recurse -Force -ErrorAction SilentlyContinue
 
