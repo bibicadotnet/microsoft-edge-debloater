@@ -208,7 +208,7 @@ Windows Registry Editor Version 5.00
 ;Tắt trang lỗi thay thế
 "AlternateErrorPagesEnabled"=dword:00000000
 
-;Tắt hỏi trước khi đóng
+;Tắt hỏi khi đóng cửa sổ trình duyệt có nhiều tab
 "AskBeforeCloseEnabled"=dword:00000000
 
 ;Tắt tự động điền địa chỉ
