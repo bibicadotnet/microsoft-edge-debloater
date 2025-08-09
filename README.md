@@ -73,8 +73,7 @@ $env:EDGE_CHANNEL='canary'; irm https://go.bibica.net/edge | iex
 ---
 
 ## Remove All Microsoft Edge Versions
-
-This script removes all installed versions of Microsoft Edge (**Stable**, **Beta**, **Dev**, and **Canary**) from your system, but **keeps your User Data** folder so that bookmarks, history, and settings are preserved.
+This script removes all installed versions of Microsoft Edge (**Stable**, **Beta**, **Dev**, and **Canary**) from your system, but keeps your **User Data** folder and **Microsoft Edge WebView2 Runtime**, so that **bookmarks**, **history**, **settings**, and apps depending on WebView2 continue to work.
 
 Run the command below in PowerShell with **Administrator privileges**:
 
