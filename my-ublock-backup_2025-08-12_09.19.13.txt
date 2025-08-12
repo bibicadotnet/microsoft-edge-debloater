@@ -1,0 +1,53 @@
+{
+  "timeStamp": 1754965153378,
+  "version": "1.65.0",
+  "userSettings": {
+    "advancedUserEnabled": true,
+    "cloudStorageEnabled": true,
+    "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt",
+    "importedLists": [
+      "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt"
+    ],
+    "popupPanelSections": 31
+  },
+  "selectedFilterLists": [
+    "user-filters",
+    "ublock-filters",
+    "ublock-badware",
+    "ublock-privacy",
+    "ublock-quick-fixes",
+    "ublock-unbreak",
+    "ublock-experimental",
+    "easylist",
+    "easyprivacy",
+    "urlhaus-1",
+    "plowe-0",
+    "fanboy-cookiemonster",
+    "ublock-cookies-easylist",
+    "adguard-cookies",
+    "ublock-cookies-adguard",
+    "fanboy-social",
+    "adguard-social",
+    "easylist-chat",
+    "easylist-newsletters",
+    "easylist-notifications",
+    "easylist-annoyances",
+    "adguard-mobile-app-banners",
+    "adguard-other-annoyances",
+    "adguard-popup-overlays",
+    "adguard-widgets",
+    "ublock-annoyances",
+    "VIE-1",
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt"
+  ],
+  "hiddenSettings": {},
+  "whitelist": [
+    "chrome-extension-scheme",
+    "drive.google.com",
+    "moz-extension-scheme"
+  ],
+  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
+  "urlFilteringString": "",
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false",
+  "userFilters": "https://analytics.bibica.net/api/aloha\n\n! Jul 28, 2025 https://www.youtube.com\nwww.youtube.com###content > .ytd-rich-section-renderer.style-scope\nyoutube.com##ytd-rich-item-renderer:has(#meta > ytd-badge-supported-renderer.video-badge.style-scope.ytd-rich-grid-media:nth-child(3) > div.badge.badge-style-type-members-only.style-scope.ytd-badge-supported-renderer:first-child)\nyoutube.com##ytd-rich-item-renderer.ytd-rich-grid-renderer:has(.badge-style-type-members-only)\nwww.youtube.com##:is(ytd-rich-item-renderer,ytd-compact-video-renderer,ytd-video-renderer,ytd-grid-video-renderer):has(.badge-style-type-members-only)\n\n! Aug 1, 2025 https://babia.to\nbabia.to###ktdoNXKepfjBNEdr\nbabia.to###HTWbOezaGjIeTBI\n\n! Aug 4, 2025 https://funix.edu.vn\n||funix.edu.vn/wp-content/uploads/2025/04/600x375-01-1.png$image\nfunix.edu.vn###imagePopup > .popup-content\n\n! Aug 4, 2025 https://babia.to\nbabia.to###JtzEnBmJBJ\n\n! Aug 5, 2025 https://whoer.net\nwhoer.net##.banner-whoer_two.banner-whoer\n\n! Aug 5, 2025 https://time.is\ntime.is##._1mbd8ky\n\n! Aug 6, 2025 https://www.youtube.com\nwww.youtube.com##yt-lockup-view-model.lockup.ytd-item-section-renderer:nth-of-type(3)\n\n||finallygotthexds.site^\n\n! Aug 11, 2025 https://babia.to\nbabia.to##.uix_noticeInner\n\n! Aug 12, 2025 https://topshare.in\ntopshare.in###adblock-overlay\n\nfacebook.com##div[aria-label=\"Stories\"]"
+}
