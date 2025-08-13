@@ -18,15 +18,15 @@
   * Performance: sleeping tabs discard inactive tabs after **15 minutes** to save RAM
 
 ---
+Edge Channel Overview (08/2025 – Actual)
 
-## Edge Channel Overview
+| Channel    | Update Frequency (current) | Stability | Intended For                                             |
+| ---------- | -------------------------- | --------- | -------------------------------------------------------- |
+| **Stable** | Every \~5–6 days           | ★★★★☆     | General users, maximum reliability, rapid security fixes |
+| **Beta**   | Every \~5–6 days           | ★★★☆☆     | Users who want to try upcoming features with fewer bugs  |
+| **Dev**    | Every \~7–8 days           | ★★☆☆☆     | Developers and testers who want early features           |
+| **Canary** | Daily                      | ★☆☆☆☆     | Enthusiasts who want the newest features immediately     |
 
-| Channel    | Update Frequency | Stability | Intended For                                            |
-| ---------- | ---------------- | --------- | ------------------------------------------------------- |
-| **Stable** | Every 4 weeks    | ★★★★☆     | General users, maximum reliability                      |
-| **Beta**   | Every 4 weeks    | ★★★☆☆     | Users who want to try upcoming features with fewer bugs |
-| **Dev**    | Weekly           | ★★☆☆☆     | Developers and testers who want early features          |
-| **Canary** | Daily            | ★☆☆☆☆     | Enthusiasts who want the newest features immediately    |
 
 ---
 
