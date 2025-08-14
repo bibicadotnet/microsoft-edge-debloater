@@ -41,14 +41,8 @@ $edgeVariants | ForEach-Object {
 # Remove registry entries
 @(
     "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge",
-    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge",
-    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge Update",
-    "HKLM:\SOFTWARE\Microsoft\EdgeUpdate",
-    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate",
     "HKCU:\Software\Microsoft\Edge",
-    "HKCU:\Software\Microsoft\EdgeUpdate", 
-    "HKLM:\Software\Policies\Microsoft\Edge",
-    "HKLM:\Software\Policies\Microsoft\EdgeUpdate"
+    "HKLM:\Software\Policies\Microsoft\Edge"
 ) | ForEach-Object { if (Test-Path $_) { Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue } }
 
 # Remove StartMenuInternet entries
@@ -76,16 +70,6 @@ ForEach-Object {
     }
 }
 
-# Clean EdgeUpdate clients
-"HKCU:\SOFTWARE\Microsoft\EdgeUpdate\Clients",
-"HKLM:\SOFTWARE\Microsoft\EdgeUpdate\Clients",
-"HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients" |
-ForEach-Object {
-    if (Test-Path $_) {
-        Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue
-    }
-}
-
 # Remove Windows Installer entries
 "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData",
 "HKLM:\SOFTWARE\Classes\Installer\Products",
@@ -109,8 +93,7 @@ if (Test-Path $regApps) {
 }
 
 # Remove services
-"edgeupdate", "edgeupdatem", "MicrosoftEdgeUpdate" |
-    ForEach-Object { if (Get-Service -Name $_ -ErrorAction SilentlyContinue) { sc.exe delete $_ | Out-Null } }
+Get-ScheduledTask -TaskName "MicrosoftEdgeUpdate*" -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
 
 Write-Host "Microsoft Edge has been removed." -ForegroundColor Green
 Write-Host
