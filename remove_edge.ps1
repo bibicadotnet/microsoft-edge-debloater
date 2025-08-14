@@ -2,7 +2,7 @@
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "Run this script as Administrator!" -ForegroundColor Red; pause; exit
 }
-Write-Host "`nRemoving Microsoft Edge..." -ForegroundColor Yellow
+Write-Host "`nRemoving Microsoft Edge v1.0..." -ForegroundColor Yellow
 
 # Stop Edge processes
 "msedge", "MicrosoftEdgeUpdate", "edgeupdate", "edgeupdatem", "MicrosoftEdgeSetup" | 
