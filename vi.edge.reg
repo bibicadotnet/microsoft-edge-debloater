@@ -46,7 +46,7 @@ Windows Registry Editor Version 5.00
 ;Tắt hiển thị Microsoft Rewards
 "ShowMicrosoftRewards"=dword:00000000
 
-;Tự động nhập dữ liệu khi chạy lần đầu
+;Tắt tính năng nhập tự động và phần nhập của trải nghiệm lần chạy đầu tiên bị bỏ qua
 "AutoImportAtFirstRun"=dword:00000004
 
 ;Tắt tính năng Workspaces
