@@ -153,8 +153,8 @@ Windows Registry Editor Version 5.00
 ;Tắt bộ lọc tìm kiếm
 "SearchFiltersEnabled"=dword:00000000
 
-;Bật gợi ý tìm kiếm
-"SearchSuggestEnabled"=dword:00000001
+; Khi bật gợi ý tìm kiếm, trình duyệt không bật lên được (bỏ tính năng này)
+;"SearchSuggestEnabled"=dword:00000001
 
 ;Tắt thanh tìm kiếm
 "SearchbarAllowed"=dword:00000000
@@ -321,7 +321,9 @@ Windows Registry Editor Version 5.00
 ;Cấu hình ngăn chặn theo dõi ở mức balanced
 "TrackingPrevention"=dword:00000002
 
-; Cấu hình DNS tự động hỗ trợ ECS (chặn quảng cáo bởi HaGeZi's Pro++ và ABPVN)
+; Cấu hình Cloudflare Gateway DNS hỗ trợ ECS (chặn quảng cáo bởi bộ lọc AdGuard và ABPVN)
+; https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt
+; https://adguardteam.github.io/HostlistsRegistry/assets/filter_16.txt
 "DnsOverHttpsMode"="automatic"
 "DnsOverHttpsTemplates"="https://iabucttpma.cloudflare-gateway.com/dns-query{?dns}"
 
@@ -400,8 +402,9 @@ Windows Registry Editor Version 5.00
 ; Tự động chạy HTTPS
 "HttpsUpgradesEnabled"=dword:00000001
 
-; Bắt buộc dùng HTTPS (hỗ trợ từ phiên bản 140)
-"HttpsOnlyMode"="force_enabled"
+; Bắt buộc dùng HTTPS (hỗ trợ từ phiên bản 140) (tạm tắt)
+; Không cần thiết, tự chạy https cũng đủ rồi
+;"HttpsOnlyMode"="force_enabled"
 
 ; Change default search Google (dùng duy nhất Google làm tìm kiếm)
 "ManagedSearchEngines"="[{\"is_default\":true,\"keyword\":\"google.com\",\"name\":\"Google\",\"search_url\":\"https://www.google.com/search?q={searchTerms}\",\"suggest_url\":\"https://www.google.com/complete/search?output=chrome&q={searchTerms}\"}]"
