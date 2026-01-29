@@ -1,14 +1,18 @@
 {
-  "timeStamp": 1754965153378,
-  "version": "1.65.0",
+  "timeStamp": 1769691888151,
+  "version": "1.69.0",
   "userSettings": {
     "advancedUserEnabled": true,
     "cloudStorageEnabled": true,
-    "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt",
+    "externalLists": "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt\nhttps://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/ubo-link-shorteners.txt\nhttps://www.cromite.org/filters/badmojr-1Hosts-master-Pro-adblock.txt\nhttps://www.cromite.org/filters/easylist.txt",
     "importedLists": [
-      "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt"
+      "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt",
+      "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/ubo-link-shorteners.txt",
+      "https://www.cromite.org/filters/badmojr-1Hosts-master-Pro-adblock.txt",
+      "https://www.cromite.org/filters/easylist.txt"
     ],
-    "popupPanelSections": 31
+    "popupPanelSections": 31,
+    "userFiltersTrusted": true
   },
   "selectedFilterLists": [
     "user-filters",
@@ -17,37 +21,27 @@
     "ublock-privacy",
     "ublock-quick-fixes",
     "ublock-unbreak",
-    "ublock-experimental",
     "easylist",
     "easyprivacy",
     "urlhaus-1",
     "plowe-0",
     "fanboy-cookiemonster",
     "ublock-cookies-easylist",
-    "adguard-cookies",
-    "ublock-cookies-adguard",
     "fanboy-social",
-    "adguard-social",
-    "easylist-chat",
-    "easylist-newsletters",
-    "easylist-notifications",
-    "easylist-annoyances",
-    "adguard-mobile-app-banners",
-    "adguard-other-annoyances",
-    "adguard-popup-overlays",
-    "adguard-widgets",
-    "ublock-annoyances",
+    "CHN-0",
     "VIE-1",
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt"
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt",
+    "https://www.cromite.org/filters/easylist.txt",
+    "https://www.cromite.org/filters/badmojr-1Hosts-master-Pro-adblock.txt",
+    "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/ubo-link-shorteners.txt"
   ],
   "hiddenSettings": {},
   "whitelist": [
     "chrome-extension-scheme",
-    "drive.google.com",
     "moz-extension-scheme"
   ],
   "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
   "urlFilteringString": "",
-  "hostnameSwitchesString": "no-large-media: behind-the-scene false",
-  "userFilters": "https://analytics.bibica.net/api/aloha\n\n! Jul 28, 2025 https://www.youtube.com\nwww.youtube.com###content > .ytd-rich-section-renderer.style-scope\nyoutube.com##ytd-rich-item-renderer:has(#meta > ytd-badge-supported-renderer.video-badge.style-scope.ytd-rich-grid-media:nth-child(3) > div.badge.badge-style-type-members-only.style-scope.ytd-badge-supported-renderer:first-child)\nyoutube.com##ytd-rich-item-renderer.ytd-rich-grid-renderer:has(.badge-style-type-members-only)\nwww.youtube.com##:is(ytd-rich-item-renderer,ytd-compact-video-renderer,ytd-video-renderer,ytd-grid-video-renderer):has(.badge-style-type-members-only)\n\n! Aug 1, 2025 https://babia.to\nbabia.to###ktdoNXKepfjBNEdr\nbabia.to###HTWbOezaGjIeTBI\n\n! Aug 4, 2025 https://funix.edu.vn\n||funix.edu.vn/wp-content/uploads/2025/04/600x375-01-1.png$image\nfunix.edu.vn###imagePopup > .popup-content\n\n! Aug 4, 2025 https://babia.to\nbabia.to###JtzEnBmJBJ\n\n! Aug 5, 2025 https://whoer.net\nwhoer.net##.banner-whoer_two.banner-whoer\n\n! Aug 5, 2025 https://time.is\ntime.is##._1mbd8ky\n\n! Aug 6, 2025 https://www.youtube.com\nwww.youtube.com##yt-lockup-view-model.lockup.ytd-item-section-renderer:nth-of-type(3)\n\n||finallygotthexds.site^\n\n! Aug 11, 2025 https://babia.to\nbabia.to##.uix_noticeInner\n\n! Aug 12, 2025 https://topshare.in\ntopshare.in###adblock-overlay\n\nfacebook.com##div[aria-label=\"Stories\"]"
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-popups: rophim.me true\nno-popups: rophim.mx true\nno-popups: vozer.io true\nno-popups: vozer.vn true\nno-popups: www.rophim.mx true\nno-popups: rophim.moi true\nno-popups: www.rophim.moi true",
+  "userFilters": "! Title: [BIBICA.NET] Ad Block Filters\n! Description: Custom filters for Vietnamese websites\n! Version: 1.0\n! Homepage: https://github.com/bibicadotnet/ublock-filters\n\n! Analytics blocking\n||analytics.bibica.net/api/aloha^\n\n! YouTube filters - Jul 28, 2025\nwww.youtube.com###content > .ytd-rich-section-renderer.style-scope\nyoutube.com##ytd-rich-item-renderer:has(#meta > ytd-badge-supported-renderer.video-badge.style-scope.ytd-rich-grid-media:nth-child(3) > div.badge.badge-style-type-members-only.style-scope.ytd-badge-supported-renderer:first-child)\nyoutube.com##ytd-rich-item-renderer.ytd-rich-grid-renderer:has(.badge-style-type-members-only)\nwww.youtube.com##:is(ytd-rich-item-renderer,ytd-compact-video-renderer,ytd-video-renderer,ytd-grid-video-renderer):has(.badge-style-type-members-only)\n\n! YT Homepage - Hide Posts Section\nwww.youtube.com##ytd-browse[page-subtype=\"home\"] ytd-rich-section-renderer:has(ytd-rich-item-renderer[is-post])\nwww.youtube.com##ytd-browse[page-subtype=\"home\"] ytd-rich-item-renderer[is-post]\n\n! Additional YouTube filter - Aug 6, 2025\nwww.youtube.com##yt-lockup-view-model.lockup.ytd-item-section-renderer:nth-of-type(3)\n\n! Babia.to filters - Aug 1, Aug 4, Aug 11, 2025\nbabia.to###ktdoNXKepfjBNEdr\nbabia.to###HTWbOezaGjIeTBI\nbabia.to###JtzEnBmJBJ\nbabia.to##.uix_noticeInner\n\n! Funix.edu.vn filters - Aug 4, 2025\n||funix.edu.vn/wp-content/uploads/2025/04/600x375-01-1.png$image\nfunix.edu.vn###imagePopup > .popup-content\n\n! Whoer.net filter - Aug 5, 2025\nwhoer.net##.banner-whoer_two.banner-whoer\n\n! Time.is filter - Aug 5, 2025\ntime.is##._1mbd8ky\n\n! Block malicious domain\n||finallygotthexds.site^\n\n! Topshare.in filter - Aug 12, 2025\ntopshare.in###adblock-overlay\n\n! Xem14.net filters - Aug 19, 2025\n||xem14.net/_next/image?url=%2Fcuba.png&w=*&q=75$image\n\n! Thuvienanime.net filters - Aug 22, 2025\n||thuvienanime.net/wp-content/plugins/wpdiscuz/assets/third-party/colorbox/images/overlay.png$image\nthuvienanime.net###cboxOverlay\n\n! Vozer.top filters - Aug 29, 2025\nvozer.top##.lg\\:w-1\\/4.lg\\:ml-2\n||vozer.top/voucher_live_snhxhw.png$image\n\n! Viettelstore.vn filter - Aug 31, 2025\nviettelstore.vn###overlay3\n\n! Lowendtalk.com filter - Sep 14, 2025\nlowendtalk.com###Foot > [href] > [src]\n\n! vozer.vn\nvozer.vn##script:has-text(openPopunder)\nvozer.vn##script:has-text(ad_popup)\nvozer.vn##script:has-text(urllisthome)\n||vozer.vn^$popup\n||vt.tiktok.com/ZSBjESX4U^$domain=vozer.vn\n||s.shopee.vn/2VgQBqRlFT^$domain=vozer.vn \n||vt.tiktok.com/ZSBjEqApE^$domain=vozer.vn\nvozer.vn##.adsbygoogle\nvozer.vn##div[id^=\"ezoic-pub-ad-placeholder\"]\nvozer.vn##div[id^=\"ads-container\"]\nvozer.vn##div#ads_show\nvozer.vn##div#modal-container\nvozer.vn##button#donate\nvozer.vn##div#fb-root\nvozer.vn##div.fb-page\nvozer.vn##script:has-text(ezstandalone)\n\n! Sep 16, 2025 https://babia.to\nbabia.to###fIWfDrhwHScX\nbabia.to###GzcUjMbmAKlzw\n\n! Sep 17, 2025 https://babia.to\nbabia.to###CNjvNZeunidrj\nbabia.to###rSUbZszVmhO\n\n! Sep 18, 2025 https://vozer.vn\nvozer.vn##.bg-gray-50.lg\\:px-10.shadow.p-3.block\nvozer.vn##.border-b.bg-white.font-medium.mt-5.border-green-head.border-b-2.rounded-t.shadow.pl-3.p-2.block\n\n! vozer.io\nvozer.io##script:has-text(openPopunder)\nvozer.io##script:has-text(ad_popup)\nvozer.io##script:has-text(urllisthome)\n||vozer.io^$popup\n||vt.tiktok.com/ZSBjESX4U^$domain=vozer.io\n||s.shopee.vn/2VgQBqRlFT^$domain=vozer.io \n||vt.tiktok.com/ZSBjEqApE^$domain=vozer.io\nvozer.io##.adsbygoogle\nvozer.io##div[id^=\"ezoic-pub-ad-placeholder\"]\nvozer.io##div[id^=\"ads-container\"]\nvozer.io##div#ads_show\nvozer.io##div#modal-container\nvozer.io##button#donate\nvozer.io##div#fb-root\nvozer.io##div.fb-page\nvozer.io##script:has-text(ezstandalone)\nvozer.io##.bg-gray-50.lg\\:px-10.shadow.p-3.block\nvozer.io##.border-b.bg-white.font-medium.mt-5.border-green-head.border-b-2.rounded-t.shadow.pl-3.p-2.block\n\n! Sep 25, 2025 https://vozer.io\n||vozer.io/img/thumb-user.jpg$image\n\n\n! rophim.mx filters - Aug 14, Aug 30, 2025\nrophim.*##.swiper-slide:has(> .sspp-area)\n\n! Sep 28, 2025 https://medium.com\nmedium.com##.gu.fr.m.afy.afx.afw.afv.afu.aft.afs.afr.afq.afp.afo.afn.afm.afl.pw-susi-modal\nmedium.com##.afk.afj.gz.afi.o.vg.afh.afg.aff.gy.afe.afd.ci.r.ac\n\n! Sep 28, 2025 https://www.google.com\nwww.google.com##.XPuBac\n\n! Oct 2, 2025 https://baomoi.com\nbaomoi.com##.OQYggvsI\nbaomoi.com###ZAP-zone-858047551855085629 > .z2-oym-iframe\nbaomoi.com##div.block.is-show:nth-of-type(4)\nbaomoi.com##.WgzwGjtF\nbaomoi.com##.r3-fixed.bg-gray.SEPPwFvg\nbaomoi.com##.GyzAzlXz\n\n! Oct 2, 2025 https://www.nguoiduatin.vn\n||www.facebook.com/v10.0/plugins/page.php?adapt_container_width=true&app_id=112216465254411&channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df204dc9cb3062e4e0%26domain%3Dwww.nguoiduatin.vn%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fwww.nguoiduatin.vn%252Ffd475a92aebc3d0de%26relation%3Dparent.parent&container_width=0&hide_cover=true&href=https%3A%2F%2Fwww.facebook.com%2Fnguoiduatin.vn&locale=vi_VN&sdk=joey&show_facepile=true&small_header=true&tabs=timeline&width=300$subdocument\nwww.nguoiduatin.vn##.box-col-right\n\n! Oct 2, 2025 https://vnexpress.net\nvnexpress.net##.col-right-top\nvnexpress.net##.button-adblock\n\n! Oct 4, 2025 https://appnee.com\nappnee.com###aao_overlay\n\n! Oct 10, 2025 https://vozer.io\n||vozer.io/img/shopee$image\n||vozer.io/img/tiktok$image\n\n! Nov 2, 2025 https://www.reddit.com\nwww.reddit.com###games_section\nwww.reddit.com##.select-none.min-h-screen-without-header.w-full.s\\:shrink.shrink-0.pt-md.mb-0.mt-0.flex-col.flex.box-border.z-2 > faceplate-tracker > .nd\\:visible\nwww.reddit.com##hr.border-neutral-border-weak.my-sm.w-100:nth-of-type(1)\n\n! Nov 3, 2025 https://codingplainenglish.medium.com\ncodingplainenglish.medium.com##.m.wt.ws.wr.wq.wp\n\n! Nov 5, 2025 https://www.rophim.li\nwww.rophim.li##.content-rb.content\n\n! Nov 10, 2025 https://thoibao.de\n||thoibao.de/wp-content/uploads/2024/04/technology-6.gif$image\n||thoibao.de/wp-content/uploads/2018/05/may-tinh-tien_GoBD*.jpg$image\n||thoibao.de/wp-content/uploads/2018/05/may-tinh-tien_GoBD*.jpg$image\n\n! Nov 12, 2025 https://tinhot60s.com\n||tinhot60s.com/wp-content/uploads/2025/10/0000-Copy-Copy.png$image\ntinhot60s.com##a[href=\"https://vt.tiktok.com/ZSHv4hBc4LyCg-0UDo1/\"]:nth-of-type(2)\ntinhot60s.com##.spu-content > p\n\nrophim.*##+js(trusted-json-edit-xhr-response, .result.is_vip=true, /user/info)\nrophim.*##+js(trusted-json-edit-xhr-response, .result.is_verified=true, /user/info)\nrophim.*##+js(trusted-json-edit-xhr-response, .result.coin_balance=999999999, /user/info)\nrophim.*##+js(trusted-json-edit-xhr-response, .result.vip_expires_at=253394586000, /user/info)\n\nhamieu1.online##+js(trusted-click-element, .position-relative, ,10000)\n\n! Nov 22, 2025 https://linkneverdie.net\nlinkneverdie.net###popup_warning_modal\n\n! Nov 27, 2025 https://ngoisao.vnexpress.net\nngoisao.vnexpress.net###\\30\nngoisao.vnexpress.net###\\33\nngoisao.vnexpress.net###\\34\nngoisao.vnexpress.net###\\37\n\n! Nov 27, 2025 https://tvhay5.org\n||tvhay5.org/banner/980x90_default.png$image\n||tvhay5.org/banner/980x90_default.png$image\n\n! Jan 11, 2026 https://www.rophim.moi\nwww.rophim.moi##.content-rb.content\n\n! Jan 17, 2026 https://lowendtalk.com\n||lowendtalk.com/uploads/editor/$image\n\n! Jan 19, 2026 https://www.rophim.nl\nwww.rophim.nl##.content-rb.content"
 }
