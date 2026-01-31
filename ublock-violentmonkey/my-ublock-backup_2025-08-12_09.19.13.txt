@@ -1,5 +1,5 @@
 {
-  "timeStamp": 1769691888151,
+  "timeStamp": 1769885418525,
   "version": "1.69.0",
   "userSettings": {
     "advancedUserEnabled": true,
@@ -12,22 +12,17 @@
       "https://www.cromite.org/filters/easylist.txt"
     ],
     "popupPanelSections": 31,
+    "suspendUntilListsAreLoaded": true,
     "userFiltersTrusted": true
   },
   "selectedFilterLists": [
     "user-filters",
-    "ublock-filters",
-    "ublock-badware",
-    "ublock-privacy",
-    "ublock-quick-fixes",
-    "ublock-unbreak",
-    "easylist",
-    "easyprivacy",
-    "urlhaus-1",
-    "plowe-0",
     "fanboy-cookiemonster",
     "ublock-cookies-easylist",
+    "adguard-cookies",
+    "ublock-cookies-adguard",
     "fanboy-social",
+    "adguard-social",
     "CHN-0",
     "VIE-1",
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt",
