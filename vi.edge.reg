@@ -413,8 +413,8 @@ Windows Registry Editor Version 5.00
 "EdgeHistoryAISearchEnabled"=dword:00000000
 
 ; Cloudflare Gateway DNS ECS (chặn quảng cáo bởi bộ lọc AdGuard và ABPVN)
-"DnsOverHttpsMode"="secure"
-"DnsOverHttpsTemplates"="https://iabucttpma.cloudflare-gateway.com/dns-query{?dns}"
+; "DnsOverHttpsMode"="secure"
+; "DnsOverHttpsTemplates"="https://doh.bibica.net/dns-query{?dns}"
 
 ; Chặn New Tab mặc định
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge\URLBlocklist]
