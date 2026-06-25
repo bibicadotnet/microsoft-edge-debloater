@@ -27,6 +27,15 @@ pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -PolicyFormat plist -OutputPa
 pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -PolicyFormat json -OutputPath ./generated/edge/managed-policy.json
 ```
 
+To export mobile managed app configuration payloads for Intune or another UEM:
+
+```powershell
+pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -Platform iOS -PolicyFormat plist -OutputPath ./generated/edge/mobile-ios.plist
+pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -Platform Android -PolicyFormat json -OutputPath ./generated/edge/mobile-android.json
+```
+
+Mobile policies can't be applied locally from a desktop script. Import the exported payload as an Edge app configuration policy for managed devices.
+
 To apply the desktop policy without reinstalling Edge:
 
 ```powershell

@@ -24,8 +24,8 @@ For automation, scripts should read `https://edgeupdates.microsoft.com/api/produ
 | Windows | Windows 10 SAC 1709+, Windows 10 LTSC listed by Microsoft, Windows 11, and supported Windows Server releases. Edge 128+ requires CPUs with SSE3. | Install Stable/Beta/Dev/Canary, apply Edge browser and EdgeUpdate policies through registry files or PowerShell, remove desktop Edge while keeping WebView2 when requested. |
 | macOS | Microsoft Edge 139+ requires macOS 12 Monterey or later. Apple Silicon has native Stable support from Edge 88. | Install/update through Microsoft's `.pkg` artifacts, apply Edge policies with `com.microsoft.Edge.plist`, and verify in `edge://policy`. Do not use Windows registry policy. |
 | Linux | Microsoft says Edge is supported on Linux. The update API publishes x64 `.deb` and `.rpm` artifacts for desktop channels. | Install/update through Microsoft packages, apply Edge policies with admin-owned managed JSON, and verify in `edge://policy`. No EdgeUpdate service removal equivalent should be assumed. |
-| iOS | Microsoft Edge for iPhone and iPad requires iOS 18.0 or later and tracks the two most recent major iOS versions. | Provide App Store/install guidance and in-app configuration notes. Apple does not allow repo scripts to install or modify app internals on normal iOS devices. MDM-managed devices can use configuration profiles where Edge exposes policy. |
-| Android | Android 10.0+ on ARM-based phones and tablets. | Provide Play Store/install guidance, flag guidance, extension notes, and Android Enterprise policy notes where available. Normal Android devices should not be treated like writable desktop installs. |
+| iOS | Microsoft Edge for iPhone and iPad requires iOS 18.0 or later and tracks the two most recent major iOS versions. | Export managed app configuration plist payloads for Intune/UEM. Apple does not allow repo scripts to install or modify app internals on normal iOS devices. |
+| Android | Android 10.0+ on ARM-based phones and tablets. | Export Android Enterprise managed configuration JSON payloads for Intune/UEM. Normal Android devices should not be treated like writable desktop installs. |
 
 ## Desktop installer helper
 
@@ -56,6 +56,17 @@ pwsh ./Invoke-EdgeDebloat.ps1 -Action ApplyPolicy
 
 See [desktop-policy-research.md](desktop-policy-research.md) for the OS-specific policy surfaces, source links, and type-handling notes.
 
+## Mobile policy helper
+
+iOS and Android policies are applied through MDM/UEM, not from a local desktop shell. The repo can generate import payloads:
+
+```powershell
+pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -Platform iOS -PolicyFormat plist -OutputPath ./generated/edge/mobile-ios.plist
+pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -Platform Android -PolicyFormat json -OutputPath ./generated/edge/mobile-android.json
+```
+
+Import the output as an Edge app configuration policy for managed devices in Intune or another UEM.
+
 ## Release cadence
 
 Microsoft says Stable moves to a two-week major release cycle starting with Edge 152. Extended Stable remains an 8-week option for managed enterprise environments.
@@ -68,6 +79,8 @@ Microsoft says Stable moves to a two-week major release cycle starting with Edge
 
 - Microsoft Learn: [Microsoft Edge supported operating systems](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-supported-operating-systems)
 - Microsoft Learn: [Microsoft Edge release schedule](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-release-schedule)
+- Microsoft Learn: [Microsoft Edge mobile policies](https://learn.microsoft.com/en-us/deployedge/microsoft-edge-mobile-policies)
+- Microsoft Learn: [Manage Microsoft Edge on iOS and Android with Intune](https://learn.microsoft.com/en-us/intune/app-management/configuration/configure-edge-ios-android)
 - Microsoft: [Download Microsoft Edge](https://www.microsoft.com/en-us/edge/download)
 - Apple App Store: [Microsoft Edge](https://apps.apple.com/us/app/microsoft-edge/id1288723196)
 - Google Play: [Microsoft Edge](https://play.google.com/store/apps/details?id=com.microsoft.emmx)

@@ -274,6 +274,48 @@ function ConvertTo-Plist {
     return ($lines -join [Environment]::NewLine)
 }
 
+function Get-MobileDisabledFeatures {
+    param([string]$PlatformName, [string]$PresetName)
+
+    if ($PresetName -eq "Minimal") { return $null }
+
+    $features = @("drop", "coupons", "weather")
+    if ($PresetName -eq "Strict") {
+        $features += @("password", "inprivate", "autofill", "translator", "readaloud", "webinspector", "share", "sendtodevices")
+        if ($PlatformName -eq "Android") { $features += "extensions" }
+    }
+    return ($features -join "|")
+}
+
+function Get-MobileEdgePolicies {
+    param([string]$PlatformName, [string]$PresetName)
+
+    $policies = [ordered]@{
+        EdgeDisableShareUsageData = $true
+        EdgeCopilotEnabled = $false
+        HideFirstRunExperience = $true
+        ExperimentationAndConfigurationServiceControl = 1
+    }
+
+    $disabledFeatures = Get-MobileDisabledFeatures $PlatformName $PresetName
+    if ($disabledFeatures) {
+        $policies.EdgeDisabledFeatures = $disabledFeatures
+    }
+
+    if ($PlatformName -eq "Android" -and $PresetName -ne "Minimal") {
+        $policies.EdgeNewTabPageLayout = "focused"
+        $policies.EdgeNewTabPageLayoutUserSelectable = $false
+    }
+
+    if ($PresetName -eq "Strict") {
+        $policies.EdgeSyncDisabled = $true
+        $policies.EdgeBlockSignInEnabled = $true
+        $policies.EdgeImportPasswordsDisabled = $true
+    }
+
+    return $policies
+}
+
 function ConvertTo-RegString {
     param([string]$Value)
     return $Value.Replace('\', '\\').Replace('"', '\"')
@@ -343,10 +385,15 @@ function Export-EdgePolicy {
         [string]$OutPath,
         [string]$Mode,
         [string]$ManifestPath,
-        [string]$PresetName
+        [string]$PresetName,
+        [string]$PlatformName
     )
 
-    $policies = Get-EdgePolicies $Path $Mode $ManifestPath $PresetName -ManifestOnly
+    $policies = if ($PlatformName -eq "iOS" -or $PlatformName -eq "Android") {
+        Get-MobileEdgePolicies $PlatformName $PresetName
+    } else {
+        Get-EdgePolicies $Path $Mode $ManifestPath $PresetName -ManifestOnly
+    }
     $content = if ($OutFormat -eq "json") {
         $policies | ConvertTo-Json -Depth 8
     } else {
@@ -453,7 +500,7 @@ function Apply-EdgePolicy {
 
     if ($PlatformName -eq "MacOS") {
         $outPath = Join-Path ([System.IO.Path]::GetTempPath()) "com.microsoft.Edge.plist"
-        Export-EdgePolicy $Path "plist" $outPath "Integer" $PolicyManifestPath $PresetName
+        Export-EdgePolicy $Path "plist" $outPath "Integer" $PolicyManifestPath $PresetName $PlatformName
         Copy-WithSudo $outPath "/Library/Managed Preferences" "com.microsoft.Edge.plist"
         "policy applied: /Library/Managed Preferences/com.microsoft.Edge.plist"
         return
@@ -461,10 +508,14 @@ function Apply-EdgePolicy {
 
     if ($PlatformName -eq "Linux") {
         $outPath = Join-Path ([System.IO.Path]::GetTempPath()) "microsoft-edge-debloater.json"
-        Export-EdgePolicy $Path "json" $outPath "Integer" $PolicyManifestPath $PresetName
+        Export-EdgePolicy $Path "json" $outPath "Integer" $PolicyManifestPath $PresetName $PlatformName
         Copy-WithSudo $outPath "/etc/opt/edge/policies/managed" "microsoft-edge-debloater.json"
         "policy applied: /etc/opt/edge/policies/managed/microsoft-edge-debloater.json"
         return
+    }
+
+    if ($PlatformName -eq "iOS" -or $PlatformName -eq "Android") {
+        throw "Mobile policy apply is not local. Export a mobile payload and import it with Intune or another UEM."
     }
 
     throw "Policy apply is only implemented for Windows, macOS, and Linux."
@@ -554,6 +605,17 @@ Windows Registry Editor Version 5.00
     if ((Get-PolicyPresetIncludes "Minimal").ContainsKey("HideFirstRunExperience") -ne $true) { throw "Minimal preset failed" }
     $boolPolicies = Read-EdgeRegPolicy $path "Boolean01"
     if ($boolPolicies.HideFirstRunExperience -ne $true) { throw "Boolean01 mode failed" }
+    $mobileMinimal = Get-MobileEdgePolicies "iOS" "Minimal"
+    if ($mobileMinimal.Contains("EdgeSyncDisabled")) { throw "Mobile minimal should not disable sync" }
+    if ($mobileMinimal.EdgeCopilotEnabled -ne $false) { throw "Mobile Copilot preset failed" }
+    $mobileDefault = Get-MobileEdgePolicies "Android" "Default"
+    if ($mobileDefault.EdgeDisabledFeatures -notmatch "drop") { throw "Mobile default features failed" }
+    if ($mobileDefault.EdgeNewTabPageLayout -ne "focused") { throw "Android NTP preset failed" }
+    $mobileStrict = Get-MobileEdgePolicies "Android" "Strict"
+    if ($mobileStrict.EdgeSyncDisabled -ne $true) { throw "Mobile strict sync failed" }
+    if ($mobileStrict.EdgeDisabledFeatures -notmatch "extensions") { throw "Android strict feature failed" }
+    $mobileStrictIos = Get-MobileEdgePolicies "iOS" "Strict"
+    if ($mobileStrictIos.EdgeDisabledFeatures -match "extensions") { throw "iOS strict feature filter failed" }
 
     $dump = @'
 {
@@ -602,4 +664,4 @@ if ($Action -eq "Analyze") {
     exit 0
 }
 
-Export-EdgePolicy $InputPath $Format $OutputPath $DwordMode $PolicyManifestPath $Preset
+Export-EdgePolicy $InputPath $Format $OutputPath $DwordMode $PolicyManifestPath $Preset $Platform
