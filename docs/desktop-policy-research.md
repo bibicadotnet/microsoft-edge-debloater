@@ -36,9 +36,9 @@ Policy presets:
 
 | Preset | Count | Handling |
 | --- | ---: | --- |
-| `Minimal` | 28 | First-run, new-tab, recommendations, tracking, and light bloat controls. |
-| `Default` | 128 | Main debloat preset. Leaves Microsoft sign-in, sync, passwords, autofill, share, and cross-device features user-controlled. |
-| `Strict` | 148 | Includes sync-adjacent Microsoft account, password, autofill, share, and cross-device lockdowns. |
+| `Standard` | 28 | First-run, new-tab, recommendations, tracking, and light bloat controls. |
+| `High` | 128 | Main debloat preset. Leaves Microsoft sign-in, sync, passwords, autofill, share, and cross-device features user-controlled. |
+| `Extreme` | 148 | Includes sync-adjacent Microsoft account, password, autofill, share, and cross-device lockdowns. |
 
 Windows apply also uses the preset: PowerShell generates a temporary filtered `.reg` file before importing it. macOS/Linux generate preset-filtered plist/JSON.
 
@@ -46,7 +46,7 @@ The original Microsoft template CABs are stored under `policies/templates/Stable
 
 Regenerate the manifest with `python3 policies/templates/Extract-PolicyManifest.py`; the script uses `bsdtar` for CAB extraction and Python's standard `zipfile` module for `MicrosoftEdgePolicyTemplates.zip`.
 
-Current `AnalyzePolicy -PolicyPreset Default` result for the registry debloat list against the Stable 149 macOS manifest:
+Current `AnalyzePolicy -PolicyPreset High` result for the registry debloat list against the Stable 149 macOS manifest:
 
 | Status | Count | Handling |
 | --- | ---: | --- |

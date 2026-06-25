@@ -19,8 +19,8 @@ param(
     [ValidateSet("json", "plist")]
     [string]$PolicyFormat = "json",
 
-    [ValidateSet("Default", "Minimal", "Strict")]
-    [string]$PolicyPreset = "Default",
+    [ValidateSet("Standard", "High", "Extreme")]
+    [string]$PolicyPreset = "High",
 
     [string]$OutputPath,
 

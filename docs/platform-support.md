@@ -67,6 +67,34 @@ pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -Platform Android -PolicyForm
 
 Import the output as an Edge app configuration policy for managed devices in Intune or another UEM.
 
+## Manual mobile setup
+
+Manual mobile setup is for users who do not want MDM/UEM. It is not policy enforcement: Edge or the OS may move settings, users can change them back, and hidden enterprise-only controls still require managed app configuration.
+
+Use the same presets as desktop:
+
+| Preset | Manual scope |
+| --- | --- |
+| `Standard` | Turn off first-run prompts, feed clutter, optional recommendations, Copilot surfaces, and optional usage data where Edge exposes those switches. |
+| `High` | Includes `Standard`, plus disable Drop, shopping/coupons, weather, and other convenience surfaces where visible. Keep Microsoft sign-in, sync, passwords, autofill, share, and cross-device features user-controlled. |
+| `Extreme` | Includes `High`, plus turn off sync, password saving/import, autofill, sharing, send-to-device, translation, read-aloud, InPrivate, and extension-related surfaces where Edge exposes those switches. |
+
+iOS by-hand checklist:
+
+1. Open Edge, then review `Settings`.
+2. Review account and sync settings. For `Extreme`, turn sync off; for `Standard` and `High`, leave sync user-controlled.
+3. Review privacy, search, services, personalization, optional diagnostic data, shopping, Copilot, new tab, password, autofill, translation, sharing, and site permission settings.
+4. Open iOS `Settings > Apps > Edge`.
+5. Disable unneeded permissions, notifications, background refresh, Siri/Search integration, and cellular data if the user wants Edge restricted to Wi-Fi.
+
+Android by-hand checklist:
+
+1. Open Edge, then review `Settings`.
+2. Review account and sync settings. For `Extreme`, turn sync off; for `Standard` and `High`, leave sync user-controlled.
+3. Review privacy, search, services, personalization, optional diagnostic data, shopping, Copilot, new tab, password, autofill, translation, sharing, extensions, and site permission settings.
+4. Open Android `Settings > Apps > Edge`.
+5. Disable unneeded permissions, notifications, background data, unrestricted battery use, link handling, and special app access where present.
+
 ## Release cadence
 
 Microsoft says Stable moves to a two-week major release cycle starting with Edge 152. Extended Stable remains an 8-week option for managed enterprise environments.

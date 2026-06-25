@@ -11,8 +11,8 @@ param(
     [ValidateSet("Auto", "Windows", "MacOS", "Linux", "iOS", "Android")]
     [string]$Platform = "Auto",
 
-    [ValidateSet("Default", "Minimal", "Strict")]
-    [string]$Preset = "Default",
+    [ValidateSet("Standard", "High", "Extreme")]
+    [string]$Preset = "High",
 
     [string]$PolicyDumpPath,
 
@@ -100,7 +100,7 @@ function Get-PolicyPresetExclusions {
         "SharedLinksEnabled",
         "UploadFromPhoneEnabled"
     )
-    if ($Name -eq "Strict") { return @{} }
+    if ($Name -eq "Extreme") { return @{} }
 
     $excluded = @{}
     foreach ($policy in $syncAdjacent) { $excluded[$policy] = $true }
@@ -111,7 +111,7 @@ function Get-PolicyPresetIncludes {
     param([string]$Name)
 
     $included = @{}
-    if ($Name -ne "Minimal") { return $included }
+    if ($Name -ne "Standard") { return $included }
 
     foreach ($policy in @(
         "AlternateErrorPagesEnabled",
@@ -277,10 +277,10 @@ function ConvertTo-Plist {
 function Get-MobileDisabledFeatures {
     param([string]$PlatformName, [string]$PresetName)
 
-    if ($PresetName -eq "Minimal") { return $null }
+    if ($PresetName -eq "Standard") { return $null }
 
     $features = @("drop", "coupons", "weather")
-    if ($PresetName -eq "Strict") {
+    if ($PresetName -eq "Extreme") {
         $features += @("password", "inprivate", "autofill", "translator", "readaloud", "webinspector", "share", "sendtodevices")
         if ($PlatformName -eq "Android") { $features += "extensions" }
     }
@@ -302,12 +302,12 @@ function Get-MobileEdgePolicies {
         $policies.EdgeDisabledFeatures = $disabledFeatures
     }
 
-    if ($PlatformName -eq "Android" -and $PresetName -ne "Minimal") {
+    if ($PlatformName -eq "Android" -and $PresetName -ne "Standard") {
         $policies.EdgeNewTabPageLayout = "focused"
         $policies.EdgeNewTabPageLayoutUserSelectable = $false
     }
 
-    if ($PresetName -eq "Strict") {
+    if ($PresetName -eq "Extreme") {
         $policies.EdgeSyncDisabled = $true
         $policies.EdgeBlockSignInEnabled = $true
         $policies.EdgeImportPasswordsDisabled = $true
@@ -600,22 +600,22 @@ Windows Registry Editor Version 5.00
     if ($knownOnly.URLBlocklist.Count -ne 2) { throw "Manifest-only list parse failed" }
     $excludedPolicies = Read-EdgeRegPolicy $path "Integer" @{} -ExcludePolicies @{ NewTabPageSearchBox = $true }
     if ($excludedPolicies.Contains("NewTabPageSearchBox")) { throw "Preset exclusion failed" }
-    if ((Get-PolicyPresetExclusions "Default").ContainsKey("PasswordManagerEnabled") -ne $true) { throw "Default preset failed" }
-    if ((Get-PolicyPresetExclusions "Strict").Count -ne 0) { throw "Strict preset failed" }
-    if ((Get-PolicyPresetIncludes "Minimal").ContainsKey("HideFirstRunExperience") -ne $true) { throw "Minimal preset failed" }
+    if ((Get-PolicyPresetExclusions "High").ContainsKey("PasswordManagerEnabled") -ne $true) { throw "High preset failed" }
+    if ((Get-PolicyPresetExclusions "Extreme").Count -ne 0) { throw "Extreme preset failed" }
+    if ((Get-PolicyPresetIncludes "Standard").ContainsKey("HideFirstRunExperience") -ne $true) { throw "Standard preset failed" }
     $boolPolicies = Read-EdgeRegPolicy $path "Boolean01"
     if ($boolPolicies.HideFirstRunExperience -ne $true) { throw "Boolean01 mode failed" }
-    $mobileMinimal = Get-MobileEdgePolicies "iOS" "Minimal"
-    if ($mobileMinimal.Contains("EdgeSyncDisabled")) { throw "Mobile minimal should not disable sync" }
-    if ($mobileMinimal.EdgeCopilotEnabled -ne $false) { throw "Mobile Copilot preset failed" }
-    $mobileDefault = Get-MobileEdgePolicies "Android" "Default"
-    if ($mobileDefault.EdgeDisabledFeatures -notmatch "drop") { throw "Mobile default features failed" }
-    if ($mobileDefault.EdgeNewTabPageLayout -ne "focused") { throw "Android NTP preset failed" }
-    $mobileStrict = Get-MobileEdgePolicies "Android" "Strict"
-    if ($mobileStrict.EdgeSyncDisabled -ne $true) { throw "Mobile strict sync failed" }
-    if ($mobileStrict.EdgeDisabledFeatures -notmatch "extensions") { throw "Android strict feature failed" }
-    $mobileStrictIos = Get-MobileEdgePolicies "iOS" "Strict"
-    if ($mobileStrictIos.EdgeDisabledFeatures -match "extensions") { throw "iOS strict feature filter failed" }
+    $mobileStandard = Get-MobileEdgePolicies "iOS" "Standard"
+    if ($mobileStandard.Contains("EdgeSyncDisabled")) { throw "Mobile standard should not disable sync" }
+    if ($mobileStandard.EdgeCopilotEnabled -ne $false) { throw "Mobile Copilot preset failed" }
+    $mobileHigh = Get-MobileEdgePolicies "Android" "High"
+    if ($mobileHigh.EdgeDisabledFeatures -notmatch "drop") { throw "Mobile high features failed" }
+    if ($mobileHigh.EdgeNewTabPageLayout -ne "focused") { throw "Android NTP preset failed" }
+    $mobileExtreme = Get-MobileEdgePolicies "Android" "Extreme"
+    if ($mobileExtreme.EdgeSyncDisabled -ne $true) { throw "Mobile extreme sync failed" }
+    if ($mobileExtreme.EdgeDisabledFeatures -notmatch "extensions") { throw "Android extreme feature failed" }
+    $mobileExtremeIos = Get-MobileEdgePolicies "iOS" "Extreme"
+    if ($mobileExtremeIos.EdgeDisabledFeatures -match "extensions") { throw "iOS extreme feature filter failed" }
 
     $dump = @'
 {

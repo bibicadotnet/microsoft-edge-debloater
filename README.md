@@ -36,6 +36,8 @@ pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -Platform Android -PolicyForm
 
 Mobile policies can't be applied locally from a desktop script. Import the exported payload as an Edge app configuration policy for managed devices.
 
+For non-managed phones, use the manual mobile checklist in [docs/platform-support.md](docs/platform-support.md#manual-mobile-setup). Manual setup is not policy enforcement, but it maps the same `Standard`, `High`, and `Extreme` presets to visible Edge and OS settings on iOS and Android.
+
 To apply the desktop policy without reinstalling Edge:
 
 ```powershell
@@ -46,19 +48,19 @@ Policy presets:
 
 | Preset | Intent |
 | --- | --- |
-| `Default` | Debloat Edge while keeping Microsoft sign-in, sync, passwords, autofill, share, and cross-device features user-controlled. |
-| `Minimal` | Apply only first-run, new-tab, recommendations, tracking, and light bloat policies. |
-| `Strict` | Also disables sync-adjacent Microsoft account, password, autofill, share, and cross-device features. |
+| `Standard` | Apply only first-run, new-tab, recommendations, tracking, and light bloat policies. |
+| `High` | Debloat Edge while keeping Microsoft sign-in, sync, passwords, autofill, share, and cross-device features user-controlled. |
+| `Extreme` | Also disables sync-adjacent Microsoft account, password, autofill, share, and cross-device features. |
 
 ```powershell
-pwsh ./Invoke-EdgeDebloat.ps1 -Action ApplyPolicy -PolicyPreset Minimal
-pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -PolicyPreset Strict -PolicyFormat json
+pwsh ./Invoke-EdgeDebloat.ps1 -Action ApplyPolicy -PolicyPreset Standard
+pwsh ./Invoke-EdgeDebloat.ps1 -Action ExportPolicy -PolicyPreset Extreme -PolicyFormat json
 ```
 
 To audit the registry policy list against the bundled Edge 149 manifest:
 
 ```powershell
-pwsh ./Invoke-EdgeDebloat.ps1 -Action AnalyzePolicy -PolicyPreset Default
+pwsh ./Invoke-EdgeDebloat.ps1 -Action AnalyzePolicy -PolicyPreset High
 ```
 
 Optional browser-extension backups live in `config/extensions/` for manual import into Edge desktop profiles.
