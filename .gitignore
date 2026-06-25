@@ -1,0 +1,5 @@
+.codebase-memory/
+downloads/
+generated/
+__pycache__/
+.DS_Store
