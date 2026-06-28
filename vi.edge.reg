@@ -567,6 +567,7 @@ Windows Registry Editor Version 5.00
 "ClearCachedImagesAndFilesOnExit"=dword:00000001
 "WhatsNewPageForEntraProfilesEnabled"=dword:00000000
 "QuickSearchShowMiniMenu"=dword:00000000
+"ImplicitSignInEnabled"=dword:00000000
 
 ; Block the default New Tab
 ; Chặn New Tab mặc định
