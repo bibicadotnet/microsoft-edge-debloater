@@ -1,0 +1,22 @@
+{
+  "version": "2026.628.2035",
+  "developerMode": true,
+  "rulesets": [
+    "+https://badmojr.github.io/1Hosts/Lite/adblock.txt",
+    "+https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/LegitimateURLShortener.txt",
+    "+https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/ubo-link-shorteners.txt",
+    "-ublock-filters",
+    "-easyprivacy",
+    "-pgl",
+    "-ublock-badware",
+    "-urlhaus-full"
+  ],
+  "filteringModes": {
+    "none": [],
+    "basic": [],
+    "optimal": [],
+    "complete": [
+      "all-urls"
+    ]
+  }
+}
