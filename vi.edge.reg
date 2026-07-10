@@ -51,8 +51,6 @@ Windows Registry Editor Version 5.00
 ; Disable the Screenshot (formerly web capture) feature
 ; Tắt tính năng Chụp ảnh màn hình (Screenshot/Web capture)
 "WebCaptureEnabled"=dword:00000000
-"DisableScreenshots"=dword:00000000
-"ScreenCaptureAllowed"=dword:00000000
 
 ; Disable prompting to switch profiles for personal/work links
 ; Tắt nhắc chuyển hồ sơ cho liên kết cá nhân/công việc
@@ -465,15 +463,19 @@ Windows Registry Editor Version 5.00
 ; Put idle background tabs to sleep to reduce CPU/battery usage
 ; Tự động đưa các tab nền vào chế độ ngủ để tiết kiệm tài nguyên
 "SleepingTabsEnabled"=dword:00000001
+
 ; Put tabs to sleep after 15 minutes of inactivity
 ; Đặt tab vào chế độ ngủ sau 15 phút không hoạt động
 "SleepingTabsTimeout"=dword:00000384
+
 ; Disable Efficiency Mode
 ; Tắt Chế độ hiệu quả (Efficiency Mode)
 "EfficiencyModeEnabled"=dword:00000000
+
 ; Disable High Efficiency Mode
 ; Tắt Chế độ hiệu suất cao (High Efficiency Mode)
 "HighEfficiencyModeEnabled"=dword:00000000
+
 ; Disable extension performance detector
 ; Tắt trình phát hiện hiệu suất của tiện ích mở rộng
 "ExtensionsPerformanceDetectorEnabled"=dword:00000000
@@ -481,29 +483,6 @@ Windows Registry Editor Version 5.00
 ; Always show the Downloads button on the toolbar
 ; Luôn hiển thị nút Tải xuống trên thanh công cụ
 "ShowDownloadsToolbarButton"=dword:00000001
-
-; Force DNS over HTTPS (DoH)
-; Bắt buộc sử dụng DNS qua HTTPS (DoH)
-"DnsOverHttpsMode"="secure"
-; Use custom template for DNS over HTTPS - Cloudflare Gateway DNS ECS
-; Sử dụng máy chủ tùy chỉnh cho DNS qua HTTPS - Cloudflare Gateway DNS ECS
-"DnsOverHttpsTemplates"="https://iabucttpma.cloudflare-gateway.com/dns-query{?dns}"
-
-; Do not bind encryption keys for local data storage to Edge
-; Không liên kết khóa mã hóa lưu trữ dữ liệu cục bộ với Edge
-"ApplicationBoundEncryptionEnabled"=dword:00000000
-
-; Disable importing browser settings from another browser
-; Tắt tính năng nhập cài đặt từ trình duyệt khác
-"ImportBrowserSettings"=dword:00000000
-
-; Disable explicitly invoking Copilot for a query
-; Tắt việc gọi Copilot thủ công
-"AllowBrowsingWithCopilot"=dword:00000000
-
-; Disable websites from accessing built-in AI APIs
-; Tắt cho phép trang web truy cập vào API AI tích hợp sẵn
-"BuiltInAIAPIsEnabled"=dword:00000000
 
 ; Hide the Microsoft 365 Copilot Chat icon
 ; Ẩn biểu tượng Trò chuyện Microsoft 365 Copilot
@@ -529,45 +508,20 @@ Windows Registry Editor Version 5.00
 ; Không tải xuống mô hình GenAI nền tảng để suy luận cục bộ
 "GenAILocalFoundationalModelSettings"=dword:00000001
 
-; Disable Copilot mode
-; Tắt chế độ Copilot
-"CopilotMode"=dword:00000000
-
-; Disable Copilot multi-tab features
-; Tắt các tính năng Copilot cho nhiều tab
-"CopilotMultitabEnabled"=dword:00000000
-
-; Disable Copilot on new tab page
-; Tắt Copilot trên trang tab mới
-"CopilotNewTabPageEnabled"=dword:00000000
-
-; Disable Copilot page context broadly
-; Ngăn chặn Copilot truy cập ngữ cảnh trang
-"CopilotPageContext"=dword:00000000
-
-; Do not include history in Entra Copilot page context
-; Không bao gồm lịch sử trong ngữ cảnh trang Entra Copilot
-"EdgeEntraCopilotPageContextIncludesHistory"=dword:00000000
-
-; Do not auto-open Copilot for M365 links
-; Không tự động mở Copilot cho các liên kết M365
-"M365LinksAutoOpenCopilotEnabled"=dword:00000000
-
-; Do not share browsing history with Microsoft 365 Copilot Search
-; Không chia sẻ lịch sử duyệt web với Microsoft 365 Copilot Search
-"ShareBrowsingHistoryWithCopilotSearchAllowed"=dword:00000000
-
-; Disable Copilot chat suggestions in the address bar
-; Tắt các đề xuất trò chuyện Copilot trên thanh địa chỉ
-"CopilotAddressBarSuggestionsEnabled"=dword:00000000
-
-; 4:14 AM Sunday, June 14, 2026
-"SmartScreenDnsRequestsEnabled"=dword:00000000
-"BrowserNetworkTimeQueriesEnabled"=dword:00000000
-"ClearCachedImagesAndFilesOnExit"=dword:00000001
-"WhatsNewPageForEntraProfilesEnabled"=dword:00000000
+; Disable the mini menu shown when selecting text on websites/PDFs
+; Tắt menu nhỏ hiện lên khi bôi đen văn bản trên trang web/PDF
 "QuickSearchShowMiniMenu"=dword:00000000
+
+; Disable automatically signing in to an Edge profile based on the OS account
+; Tắt tự động đăng nhập profile Edge theo tài khoản đang đăng nhập Windows
 "ImplicitSignInEnabled"=dword:00000000
+
+; Force DNS over HTTPS (DoH)
+; Bắt buộc sử dụng DNS qua HTTPS (DoH)
+"DnsOverHttpsMode"="secure"
+; Use custom template for DNS over HTTPS - Cloudflare Gateway DNS ECS
+; Sử dụng máy chủ tùy chỉnh cho DNS qua HTTPS - Cloudflare Gateway DNS ECS
+"DnsOverHttpsTemplates"="https://iabucttpma.cloudflare-gateway.com/dns-query{?dns}"
 
 ; Block the default New Tab
 ; Chặn New Tab mặc định
@@ -578,3 +532,25 @@ Windows Registry Editor Version 5.00
 ; Cài đặt plugin Minimal New Tab
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 "1"="khdnagehanbomfdogegmpddmcalmdnbg"
+
+; One of the 18 policies below is causing the browser crash when closing many tabs quickly, avoid reusing them until confirmed
+; 1 trong 18 policy dưới đây là nguyên nhân gây crash trình duyệt khi tắt nhanh nhiều tab cùng lúc, hạn chế dùng lại các policy này
+;
+; - AllowBrowsingWithCopilot
+; - ApplicationBoundEncryptionEnabled
+; - BrowserNetworkTimeQueriesEnabled
+; - BuiltInAIAPIsEnabled
+; - ClearCachedImagesAndFilesOnExit
+; - CopilotAddressBarSuggestionsEnabled
+; - CopilotMode
+; - CopilotMultitabEnabled
+; - CopilotNewTabPageEnabled
+; - CopilotPageContext
+; - DisableScreenshots
+; - EdgeEntraCopilotPageContextIncludesHistory
+; - ImportBrowserSettings
+; - M365LinksAutoOpenCopilotEnabled
+; - ScreenCaptureAllowed
+; - ShareBrowsingHistoryWithCopilotSearchAllowed
+; - SmartScreenDnsRequestsEnabled
+; - WhatsNewPageForEntraProfilesEnabled
