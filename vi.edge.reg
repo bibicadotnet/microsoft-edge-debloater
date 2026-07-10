@@ -533,8 +533,8 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 "1"="khdnagehanbomfdogegmpddmcalmdnbg"
 
-; One of the 18 policies below is causing the browser crash when closing many tabs quickly, avoid reusing them until confirmed
-; 1 trong 18 policy dưới đây là nguyên nhân gây crash trình duyệt khi tắt nhanh nhiều tab cùng lúc, hạn chế dùng lại các policy này
+; One of the 18 policies below is causing File Explorer crash when closing many tabs quickly, avoid reusing them until confirmed
+; 1 trong 18 policy dưới đây là nguyên nhân gây crash File Explorer khi tắt nhanh nhiều tab cùng lúc, hạn chế dùng lại các policy này
 ;
 ; - AllowBrowsingWithCopilot
 ; - ApplicationBoundEncryptionEnabled
