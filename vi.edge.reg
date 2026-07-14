@@ -1,9 +1,9 @@
 Windows Registry Editor Version 5.00
 
 ; Khôi phục về mặc định / Restore to default
-[-HKEY_CURRENT_USER\Software\Policies\Microsoft\Edge_Portable]
+[-HKEY_CURRENT_USER\Software\Policies\Microsoft\Edge]
 
-[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge_Portable]
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge]
 
 ; Hide the First-run experience and splash screen
 ; Tắt màn hình chào mừng khi khởi chạy Edge lần đầu
@@ -572,10 +572,10 @@ Windows Registry Editor Version 5.00
 
 ; Block the default New Tab
 ; Chặn New Tab mặc định
-[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge_Portable\URLBlocklist]
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge\URLBlocklist]
 "1"="ntp.msn.com"
 
 ; Install the Minimal New Tab plugin.
 ; Cài đặt plugin Minimal New Tab
-[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge_Portable\ExtensionInstallForcelist]
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist]
 "1"="khdnagehanbomfdogegmpddmcalmdnbg"
