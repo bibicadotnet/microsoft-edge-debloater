@@ -1,0 +1,7 @@
+! Title: Bibica Filters
+! Version: 1.0
+
+##div.chat-icon-wrapper
+##div.chat-icon-wrapper > svg.chat-icon
+##div.event-wrapper
+##path[fill][d]
