@@ -581,7 +581,7 @@ Windows Registry Editor Version 5.00
 "1"="khdnagehanbomfdogegmpddmcalmdnbg"
 
 ; Install the Video Download Helper plugin. Visit https://addon.bibica.net/install to install it.
-; Cài đặt  Video Download Helper, truy cập https://addon.bibica.net/install để cài đặt.
+; Cài đặt Video Download Helper, truy cập https://addon.bibica.net/install để cài đặt.
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallSources]
 "123123"="https://addon.bibica.net/*"
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallAllowlist]
